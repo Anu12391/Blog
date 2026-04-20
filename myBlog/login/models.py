@@ -19,6 +19,7 @@ class CustomUser(AbstractBaseUser):
     password = models.CharField(max_length=128)
     confirm_password = models.CharField(max_length=128)
     gender = models.CharField(max_length=5, choices=GENDER_CHOICES,default='Male')
+    joining_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.email
