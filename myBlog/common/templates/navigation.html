@@ -9,7 +9,7 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Feeds</a>
         </li>
-        
+
         {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="#">My Profile</a>
@@ -24,9 +24,13 @@
             Account
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#">Login</a></li>
-            <li><a class="dropdown-item" href="#">Register</a></li>
-            <li><a class="dropdown-item" href="#">Forgot Password</a></li>
+            {% if user.is_authenticated %}
+                <li><a class="dropdown-item" href="#">Logout</a></li>
+            {% else %}
+                <li><a class="dropdown-item" href="#">Login</a></li>
+                <li><a class="dropdown-item" href="{% url 'register_new_user' %}">Register</a></li>
+                <li><a class="dropdown-item" href="#">Forgot Password</a></li>
+            {% endif %}
           </ul>
         </li>
       </ul>

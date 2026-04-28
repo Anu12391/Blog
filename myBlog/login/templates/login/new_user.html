@@ -1,6 +1,47 @@
 {% extends 'base.html' %}
 {% block title %} Registration Form {% endblock title %}
 {% block body %}
+<div class="container-fluid ms-4 me-4">
 
-<h1>Welcome to Registration Page</h1>
+
+        <p class="text-center fw-bold mt-3">Registration Form</p>
+     <form method="POST" action="{% url 'register_new_user' %}">
+        <div class="row">
+
+                 {% csrf_token %}
+            <div class="col-6 mx-auto">
+
+
+
+
+                 {% include "login/email_field.html" with field=reg_form.email %}
+                 {% include "login/text.html" with field=reg_form.first_name %}
+                 {% include "login/text.html" with field=reg_form.last_name %}
+                 {% include "login/password.html" with field=reg_form.password %}
+                 {% include "login/password.html" with field=reg_form.confirm_password %}
+                 {% include "login/dropdown.html" with field=reg_form.gender %}
+
+
+
+
+
+
+
+
+                <div class="mt-2">
+                    <button type="submit"
+                            class="btn btn-primary"
+                            id="new_user_register_btn">
+                                        Register
+                    </button>
+                </div>
+
+
+
+
+</div>
+
+</div>
+  </form>
+</div>
 {% endblock body %}
