@@ -15,7 +15,7 @@ def register_new_user(request):
              return redirect("home")
 
      else:
-        reg_form = RegisterForm()
+        reg_form = RegisterForm(request.POST or None)
 
      return render(request, 'login/new_user.html',{'reg_form':reg_form})
 
