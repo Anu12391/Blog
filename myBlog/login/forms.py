@@ -2,6 +2,8 @@ from django import forms
 
 from login.models import NewUser
 
+from common.user_utils import createNewUser
+
 
 class RegisterForm(forms.ModelForm):
 
@@ -25,4 +27,11 @@ class RegisterForm(forms.ModelForm):
 
 
         return cleaned_data
+
+
+
+
+
+    def save(self, commit=True):
+        return createNewUser(self.cleaned_data)
 

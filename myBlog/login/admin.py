@@ -11,6 +11,11 @@ class NewUserAdminConfig(UserAdmin):
 
     list_display = [ 'joining_date', 'email', 'first_name','last_name','is_staff','is_superuser','is_active']
 
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Info', {'fields': ('first_name', 'last_name','gender')}),
+        ('Permissions', {'fields': ('is_staff', 'is_superuser', 'is_active')}),
+    )
 
 
 

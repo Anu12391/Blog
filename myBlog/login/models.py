@@ -3,6 +3,9 @@ from django.contrib.auth.models import PermissionsMixin
 
 from django.db import models
 
+
+
+
 class NewUserManager(BaseUserManager):
     def create_user(self,email,password,**extra_fields):
 
@@ -43,7 +46,7 @@ class NewUser(AbstractBaseUser,PermissionsMixin):
     first_name = models.CharField(max_length=30,blank=False, null=False)
     last_name = models.CharField(max_length=60,blank=False, null=False)
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=128)
+    # password = models.CharField(max_length=128)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES,default='Male')
     joining_date = models.DateField(auto_now_add=True)
     # is_superuser = models.BooleanField(default=False)
@@ -60,5 +63,7 @@ class NewUser(AbstractBaseUser,PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
 
 

@@ -11,11 +11,12 @@ def register_new_user(request):
          print(request.POST)
          reg_form=RegisterForm(request.POST)
          if reg_form.is_valid():
-             print(reg_form.cleaned_data)  # see submitted data
+             print(reg_form.cleaned_data)
+             reg_form.save()
+
              return redirect("home")
 
      else:
-        reg_form = RegisterForm(request.POST or None)
-
+        reg_form = RegisterForm()
      return render(request, 'login/new_user.html',{'reg_form':reg_form})
 
