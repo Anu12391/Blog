@@ -5,11 +5,15 @@
 
 
         <p class="text-center fw-bold mt-3">Registration Form</p>
+
+  <div class="row" >
+
+       <div class="card col-6 mx-auto p-3" >
      <form method="POST" action="{% url 'register_new_user' %}">
-        <div class="row">
+
 
                  {% csrf_token %}
-            <div class="col-6 mx-auto">
+
 
 
 
@@ -28,20 +32,36 @@
 
 
 
-                <div class="mt-2">
+                <div class="mt-2 text-end">
                     <button type="submit"
                             class="btn btn-primary"
                             id="new_user_register_btn">
                                         Register
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-danger"
+                            id="new_user_cancel_btn">
+                                        Cancel
                     </button>
                 </div>
 
 
 
 
+
+
+
+
+  </form>
+           </div>
+  </div>
 </div>
 
-</div>
-  </form>
-</div>
+        <script>
+            document.getElementById("new_user_cancel_btn")
+                .addEventListener("click", function() {
+                        window.history.back();
+                });
+        </script>
 {% endblock body %}
