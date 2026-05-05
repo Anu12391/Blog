@@ -19,6 +19,14 @@ class RegisterForm(forms.ModelForm):
         widgets = {
             'password': forms.PasswordInput()
         }
+
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if NewUser.objects.filter(email=email).exists():
+            self.add_error('email','email is already registered')
+        return email
+
     def clean(self):
         cleaned_data = super(RegisterForm, self).clean()
         password = cleaned_data.get("password")
