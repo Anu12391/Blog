@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
@@ -51,4 +52,24 @@ class RegisterForm(forms.ModelForm):
 
     def save(self, commit=True):
         return createNewUser(self.cleaned_data)
+
+
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(
+        label="Email",
+        widget=forms.EmailInput()
+
+    )
+
+    password = forms.CharField(
+        label="Password",
+        widget=forms.PasswordInput()
+    )
+
+
+
+
+
+
 
