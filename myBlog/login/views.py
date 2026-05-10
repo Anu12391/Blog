@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 
 from login.forms import RegisterForm,LoginForm
@@ -40,13 +40,22 @@ def login_user(request):
                 print("Inside")
                 login(request, user)
 
-                return redirect('register_new_user')
+                return redirect('home')
             else:
                 messages.error(request, "Invalid username or password")
+
 
 
     else:
         login_form=LoginForm()
     return render(request, 'login/login.html',{'login_form':login_form})
+
+
+
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('login_user')
 
 
