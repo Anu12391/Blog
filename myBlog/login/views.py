@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.views.decorators.cache import never_cache
 
 from login.forms import RegisterForm,LoginForm
 
@@ -9,7 +11,7 @@ from login.forms import RegisterForm,LoginForm
 
 # Create your views here.
 
-
+@never_cache
 def register_new_user(request):
      if request.method == 'POST':
          print(request.POST)
@@ -26,7 +28,7 @@ def register_new_user(request):
 
 
 
-
+@never_cache
 def login_user(request):
     if request.method == 'POST':
         print(request.POST)
@@ -53,9 +55,13 @@ def login_user(request):
 
 
 
-
+@login_required
 def logout_user(request):
     logout(request)
     return redirect('login_user')
+
+
+
+
 
 
