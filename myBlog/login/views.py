@@ -1,12 +1,23 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage, send_mail
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes, force_str
+from django.utils.html import strip_tags
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.cache import never_cache
 
 from login.forms import RegisterForm,LoginForm
 
+from login.backends.tokens import account_activation_token
 
+from login.models import NewUser
+
+from myBlog import settings
 
 
 # Create your views here.
@@ -18,7 +29,39 @@ def register_new_user(request):
          reg_form=RegisterForm(request.POST)
          if reg_form.is_valid():
              print(reg_form.cleaned_data)
-             reg_form.save()
+             user=reg_form.save()
+
+             # Build the link components
+             current_site = get_current_site(request)
+             mail_subject = 'Activate your account'
+             uid = urlsafe_base64_encode(force_bytes(user.pk))
+             token = account_activation_token.make_token(user)
+
+
+
+             activation_link = f"http://{current_site.domain}/user/activate/{uid}/{token}/"
+
+             # 1. Define the context for the template
+             context = {
+                 'user': user,
+                 'activation_link': activation_link,
+             }
+
+             # 2. Render the HTML content
+             html_content = render_to_string('emails/activation_email.html', context)
+
+             # 3. Create a plain-text version for older email clients
+             text_content = strip_tags(html_content)
+
+             # 4. Send the email
+             send_mail(
+                 subject=mail_subject,
+                 message=text_content,  # Plain text version
+                 from_email=settings.DEFAULT_FROM_EMAIL,
+                 recipient_list=[user.email],
+                 html_message=html_content,  # The magic part that makes it clickable
+                 fail_silently=False,
+             )
 
              return redirect("home")
 
@@ -59,6 +102,23 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('login_user')
+
+
+
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = NewUser.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, NewUser.DoesNotExist):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return HttpResponse('Thank you! Your account is now active. You can login.')
+    else:
+        return HttpResponse('Activation link is invalid or expired!')
 
 
 

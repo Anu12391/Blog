@@ -14,7 +14,7 @@ class NewUserManager(BaseUserManager):
 
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
-        extra_fields.setdefault("is_active", True)
+        extra_fields.setdefault("is_active", False)
         print(f" before DEBUG: Manager is processing email: {email}")
         email = self.normalize_email(email)
         print(f" after DEBUG: Manager is processing email: {email}")

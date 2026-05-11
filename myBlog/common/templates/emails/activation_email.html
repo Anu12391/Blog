@@ -1,0 +1,13 @@
+<!-- templates/emails/activation_email.html -->
+<p>Hi there,</p>
+<p>Thank you for signing up! Please click the button below to activate your account:</p>
+
+<p>
+    <a href="{{ activation_link }}"
+       style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+       Activate My Account
+    </a>
+</p>
+
+<p>If the button doesn't work, copy and paste this link into your browser:</p>
+<p>{{ activation_link }}</p>
