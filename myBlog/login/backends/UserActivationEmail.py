@@ -1,6 +1,6 @@
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
-from django.http import request
+from celery import shared_task
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.html import strip_tags
@@ -9,7 +9,7 @@ from django.utils.http import urlsafe_base64_encode
 from login.backends.tokens import account_activation_token
 from myBlog import settings
 
-
+@shared_task
 def sendActivationEmail(user):
     # Build the link components
     current_site = get_current_site(request)
