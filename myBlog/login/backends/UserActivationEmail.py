@@ -1,18 +1,23 @@
-from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import send_mail
 from celery import shared_task
+from django.contrib.sites.models import Site
+from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.html import strip_tags
 from django.utils.http import urlsafe_base64_encode
-
 from login.backends.tokens import account_activation_token
+
 from myBlog import settings
+from login.models import NewUser
+
 
 @shared_task
-def sendActivationEmail(user):
+def sendActivationEmail(userId):
     # Build the link components
-    current_site = get_current_site(request)
+    current_site = Site.objects.get_current()
+
+    user = NewUser.objects.get(id=userId)
+
     mail_subject = 'Activate your account'
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     token = account_activation_token.make_token(user)

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'dashboard',
     'login',
 ]
@@ -131,10 +132,12 @@ AUTH_USER_MODEL = 'login.NewUser'
 
 
 
-env_path = Path(r"D:\AllProjectFolders\PythonDjangoProjects\Project_env_files\blog_env_variables.txt")
+# env_path = Path(r"D:/AllProjectFolders/PythonDjangoProjects/Project_env_files/blog_env_variables.txt")
+env_path = Path(r"/mnt/d/AllProjectFolders/PythonDjangoProjects/Project_env_files/blog_env_variables.txt")
 load_dotenv(dotenv_path=env_path)
 
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
+
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
@@ -143,10 +146,13 @@ EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 
 SITE_DOMAIN = os.getenv("SITE_DOMAIN")
+SITE_ID = 1
 
 
 # CELERY STUFF
 WSL_IP =os.getenv("WSL_IP")
+
 CELERY_BROKER_URL = f'redis://{WSL_IP}:6379/0'
 CELERY_RESULT_BACKEND = f'redis://{WSL_IP}:6379/0'
+
 

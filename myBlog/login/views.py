@@ -27,11 +27,11 @@ def register_new_user(request):
              user=reg_form.save()
 
              transaction.on_commit(
-                 # lambda: send_activation_email_task.delay(user.id)
+
                  lambda: sendActivationEmail.delay(user.id)
              )
 
-             # sendActivationEmail(user)
+
 
 
              return redirect("home")
