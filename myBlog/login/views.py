@@ -8,11 +8,13 @@ from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.cache import never_cache
 from login.backends.tokens import account_activation_token
-from login.forms import RegisterForm, LoginForm
+from login.forms import RegisterForm, LoginForm,ForgotPasswordForm
 from login.models import NewUser
 
 from myBlog import settings
 from login.backends.UserActivationEmail import sendActivationEmail
+
+
 
 
 # Create your views here.
@@ -90,6 +92,25 @@ def activate(request, uidb64, token):
         return HttpResponse('Thank you! Your account is now active. You can login.')
     else:
         return HttpResponse('Activation link is invalid or expired!')
+
+
+
+@never_cache
+def forgotpassword(request):
+    if request.method == 'POST':
+        forgotPasswordForm = ForgotPasswordForm(request.POST)
+        if forgotPasswordForm.is_valid():
+            email = forgotPasswordForm.cleaned_data['email']
+            print(email)
+            return redirect('login_user')
+        else:
+            messages.error(request, "Email Doesnt Exist")
+    else:
+
+        forgotPasswordForm = ForgotPasswordForm()
+    return render(request, 'login/forgot_password.html', {'forgotPasswordForm': forgotPasswordForm})
+
+
 
 
 

@@ -1,5 +1,8 @@
 from django.contrib.auth import authenticate
 
+from login.models import NewUser
+
+
 def authenticate_user(username, password):
 
     user = authenticate(username=username, password=password)
@@ -11,3 +14,8 @@ def authenticate_user(username, password):
         return None, "Your account is not activated. Please verify your email."
 
     return user, None
+
+
+def isEmailRegistered(email):
+    doesExist=NewUser.objects.filter(email=email).exists()
+    return doesExist
