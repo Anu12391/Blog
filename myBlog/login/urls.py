@@ -1,8 +1,12 @@
 from django.urls import path
 
-from login.views import register_new_user,login_user,logout_user,activate,forgotpassword
+from login.views.RegisterView import register_new_user
 
 
+from login.views.LoginViews import login_user, logout_user
+from login.views.RegisterView import activate
+
+from login.views.ForgotPasswordView import forgotpassword
 
 urlpatterns = [
     path('register/', register_new_user, name='register_new_user'),

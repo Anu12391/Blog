@@ -1,0 +1,1 @@
+from .NewUserModel import NewUser
