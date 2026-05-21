@@ -16,6 +16,4 @@ def authenticate_user(username, password):
     return user, None
 
 
-def isEmailRegistered(email):
-    doesExist=NewUser.objects.filter(email=email).exists()
-    return doesExist
+
