@@ -8,7 +8,7 @@ from login.models import NewUser
 
 
 
-def sendEmailContent(user,subLink,mail_subject):
+def sendEmailContent(user,subLink,mail_subject,htmlContent):
     current_site = Site.objects.get_current()
 
     activation_link = f"http://{current_site.domain}/{subLink}"
@@ -20,7 +20,7 @@ def sendEmailContent(user,subLink,mail_subject):
     }
 
     # 2. Render the HTML content
-    html_content = render_to_string('emails/activation_email.html', context)
+    html_content = render_to_string(htmlContent, context)
 
     # 3. Create a plain-text version for older email clients
     text_content = strip_tags(html_content)
