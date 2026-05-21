@@ -1,12 +1,18 @@
+from django.conf import settings
+from django.contrib.sites.models import Site
+
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from myBlog import settings
 from login.models import NewUser
 
 
 
-def sendEmailContent(user,activation_link,mail_subject):
+def sendEmailContent(user,subLink,mail_subject):
+    current_site = Site.objects.get_current()
+
+    activation_link = f"http://{current_site.domain}/{subLink}"
+
     # 1. Define the context for the template
     context = {
         'user': user,

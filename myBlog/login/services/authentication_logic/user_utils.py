@@ -29,3 +29,9 @@ def getUser(userId):
 def getToken(user):
     return account_activation_token.make_token(user)
 
+
+def getUserIdFromEmail(email):
+    user= NewUser.objects.get(email=email)
+    userId=user.id
+    return userId
+
