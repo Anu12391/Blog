@@ -1,15 +1,10 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.decorators.cache import never_cache
-
-
 from myBlog import settings
 from login.forms.forgotpassword import ForgotPasswordForm
-
-
-from login.services.signals.EmailLinks.UserActivationEmail import sendActivationEmail
-
 from login.services.authentication_logic.user_utils import getUserIdFromEmail
+from login.services.signals.EmailLinks.UserActivationEmail import sendForgotPasswordEmail
 
 
 @never_cache
@@ -19,7 +14,7 @@ def forgotpassword(request):
         if forgotPasswordForm.is_valid():
             email = forgotPasswordForm.cleaned_data['email']
             user=getUserIdFromEmail(email)
-            sendActivationEmail(user)
+            sendForgotPasswordEmail(user)
 
             print(email)
             return redirect('login_user')
