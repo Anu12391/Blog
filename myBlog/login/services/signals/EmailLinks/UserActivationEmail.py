@@ -25,10 +25,16 @@ def sendForgotPasswordEmail(userId):
     user = getUserByUserId(userId)
     token = getToken(user)
     uid = getUId(user)
+    print("send token",token)
+    print("send user",user)
 
     subLink = f"user/reset_password/{uid}/{token}/"
     mail_subject = "Reset Your Password"
-    htmlLink = 'emails/reset_password_email.html'
+    htmlLink = 'login/reset_password_email.html'
+
+    print("sender", user.pk)
+    print("sender", user.password)
+    print("sender", type(user))
 
     sendEmailContent(user, subLink, mail_subject, htmlLink)
 

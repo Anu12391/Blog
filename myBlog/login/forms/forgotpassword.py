@@ -1,4 +1,4 @@
-from django import forms
+
 
 from django import forms
 
@@ -16,5 +16,7 @@ class ForgotPasswordForm(forms.Form):
         email = self.cleaned_data.get('email')
         isExist=isEmailRegistered(email)
         if not isExist:
-            self.add_error('email','email is not registered yet!')
+            raise forms.ValidationError(
+                "Email is not registered yet!"
+            )
         return email

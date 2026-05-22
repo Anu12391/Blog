@@ -19,6 +19,7 @@ def sendEmailContent(user,subLink,mail_subject,htmlContent):
         'activation_link': activation_link,
     }
 
+    print(activation_link)
     # 2. Render the HTML content
     html_content = render_to_string(htmlContent, context)
 
@@ -26,11 +27,11 @@ def sendEmailContent(user,subLink,mail_subject,htmlContent):
     text_content = strip_tags(html_content)
 
     # 4. Send the email
-    send_mail(
-        subject=mail_subject,
-        message=text_content,  # Plain text version
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[user.email],
-        html_message=html_content,  # The magic part that makes it clickable
-        fail_silently=False,
-    )
+    # send_mail(
+    #     subject=mail_subject,
+    #     message=text_content,  # Plain text version
+    #     from_email=settings.DEFAULT_FROM_EMAIL,
+    #     recipient_list=[user.email],
+    #     html_message=html_content,  # The magic part that makes it clickable
+    #     fail_silently=False,
+    # )

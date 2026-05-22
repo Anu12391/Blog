@@ -14,9 +14,11 @@ def forgotpassword(request):
         if forgotPasswordForm.is_valid():
             email = forgotPasswordForm.cleaned_data['email']
             user=getUserIdFromEmail(email)
+            print("forgot user",user)
             sendForgotPasswordEmail(user)
 
-            print(email)
+
+
             return redirect('login_user')
         else:
             messages.error(request, "Email Doesnt Exist")
@@ -24,3 +26,9 @@ def forgotpassword(request):
 
         forgotPasswordForm = ForgotPasswordForm()
     return render(request, 'login/forgot_password.html', {'forgotPasswordForm': forgotPasswordForm})
+
+
+
+
+
+
