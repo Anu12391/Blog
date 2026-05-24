@@ -7,6 +7,13 @@ class ResetPasswordForm(forms.Form):
     password=forms.CharField(label="Password",widget=forms.PasswordInput)
     confirm_password = forms.CharField(label="Confirm Password", widget=forms.PasswordInput)
 
+    def __init__(self, user, *args, **kwargs):
+        """
+        Accept the user object from the view so we know whose
+        password we are modifying.
+        """
+        self.user = user
+        super(ResetPasswordForm, self).__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super(ResetPasswordForm, self).clean()
@@ -24,3 +31,12 @@ class ResetPasswordForm(forms.Form):
                 self.add_error('confirm_password', "Passwords do not match")
 
         return cleaned_data
+
+
+    def save(self):
+        password = self.cleaned_data.get("password")
+        # set_password automatically handles cryptographic hashing
+        self.user.set_password(password)
+        self.user.save()
+        return self.user
+

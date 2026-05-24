@@ -13,9 +13,9 @@ def forgotpassword(request):
         forgotPasswordForm = ForgotPasswordForm(request.POST)
         if forgotPasswordForm.is_valid():
             email = forgotPasswordForm.cleaned_data['email']
-            user=getUserIdFromEmail(email)
-            print("forgot user",user)
-            sendForgotPasswordEmail(user)
+            userId=getUserIdFromEmail(email)
+            print("forgot user",userId)
+            sendForgotPasswordEmail(userId)
 
 
 

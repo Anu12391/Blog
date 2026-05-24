@@ -13,6 +13,7 @@ def sendEmailContent(user,subLink,mail_subject,htmlContent):
 
     activation_link = f"http://{current_site.domain}/{subLink}"
 
+
     # 1. Define the context for the template
     context = {
         'user': user,
