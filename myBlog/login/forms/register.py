@@ -10,8 +10,10 @@ from login.models import NewUser
 
 from login.services.authentication_logic.user_utils import createNewUser
 
+from login.backends.LoginHelpers import PasswordValidationMixin
 
-class RegisterForm(forms.ModelForm):
+
+class RegisterForm(PasswordValidationMixin,forms.ModelForm):
 
     confirm_password = forms.CharField(
         label="Confirm Password",
@@ -33,18 +35,10 @@ class RegisterForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(RegisterForm, self).clean()
-        password = cleaned_data.get("password")
-        confirm_password = cleaned_data.get("confirm_password")
 
-        if password and confirm_password:
+        self.validate_password_strength_and_match()
 
-            try:
-                validate_password(password)
-            except ValidationError as e:
-                self.add_error('password', e)
 
-            if password != confirm_password:
-                self.add_error('confirm_password', "Passwords do not match")
 
 
         return cleaned_data

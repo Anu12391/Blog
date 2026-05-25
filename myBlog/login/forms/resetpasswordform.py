@@ -1,34 +1,21 @@
 from django import forms
-from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError
+
+from login.backends.LoginHelpers import PasswordValidationMixin
 
 
-class ResetPasswordForm(forms.Form):
+class ResetPasswordForm(PasswordValidationMixin,forms.Form):
     password=forms.CharField(label="Password",widget=forms.PasswordInput)
     confirm_password = forms.CharField(label="Confirm Password", widget=forms.PasswordInput)
 
     def __init__(self, user, *args, **kwargs):
-        """
-        Accept the user object from the view so we know whose
-        password we are modifying.
-        """
+
         self.user = user
         super(ResetPasswordForm, self).__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super(ResetPasswordForm, self).clean()
-        password = cleaned_data.get("password")
-        confirm_password = cleaned_data.get("confirm_password")
+        self.validate_password_strength_and_match()
 
-        if password and confirm_password:
-
-            try:
-                validate_password(password)
-            except ValidationError as e:
-                self.add_error('password', e)
-
-            if password != confirm_password:
-                self.add_error('confirm_password', "Passwords do not match")
 
         return cleaned_data
 

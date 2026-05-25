@@ -37,7 +37,10 @@ def resetPassword(request, uidb64, token):
 
         else:
             resetPasswordForm = ResetPasswordForm(user)
-            return render(request, "login/reset_password_email.html",{"resetPasswordForm":resetPasswordForm})
 
-    return render(request, "login/invalid_link.html")
+        return render(request, "login/reset_password_email.html",{"resetPasswordForm":resetPasswordForm})
+
+    else:
+        return render(request, "login/invalid_link.html")
+
 
