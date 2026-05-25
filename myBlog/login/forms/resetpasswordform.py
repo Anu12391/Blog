@@ -35,7 +35,8 @@ class ResetPasswordForm(forms.Form):
 
     def save(self):
         password = self.cleaned_data.get("password")
-        # set_password automatically handles cryptographic hashing
+        print(password)
+        print(self.user)
         self.user.set_password(password)
         self.user.save()
         return self.user

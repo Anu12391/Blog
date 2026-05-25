@@ -23,6 +23,8 @@ def login_user(request):
             password = login_form.cleaned_data['password']
             user=authenticate(request,username=email,password=password)
 
+
+
             if user is not None:
                 print("Inside")
                 login(request, user)

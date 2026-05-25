@@ -2,11 +2,13 @@ from django.contrib.auth.backends import ModelBackend
 
 from login.models import NewUser
 
+from login.services.authentication_logic.user_utils import getUserFromEmail,getUserFromUserId
+
 
 class LoginBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         try:
-            user=NewUser.objects.get(email=username)
+            user=getUserFromEmail(username)
 
         except NewUser.DoesNotExist:
             return None
@@ -18,7 +20,7 @@ class LoginBackend(ModelBackend):
 
     def get_user(self, user_id):
         try:
-            return NewUser.objects.get(pk=user_id)
+            return getUserFromUserId(user_id)
 
         except NewUser.DoesNotExist:
             return None

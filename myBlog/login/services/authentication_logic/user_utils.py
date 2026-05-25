@@ -39,3 +39,12 @@ def getUserIdFromEmail(email):
 def getUserByUId(uId):
     return NewUser.objects.get(pk=uId)
 
+
+def getUserFromEmail(email):
+    return NewUser.objects.get(email=email)
+
+
+def getUserFromUserId(userID):
+    return NewUser.objects.get(pk=userID)
+
+
