@@ -51,34 +51,3 @@ class LogoutUser(LoginRequiredMixin,View):
 
 
 
-# @never_cache
-# def login_user(request):
-#     if request.method == 'POST':
-#         print(request.POST)
-#         login_form=LoginForm(request.POST)
-#         if login_form.is_valid():
-#             email = login_form.cleaned_data['email']
-#             password = login_form.cleaned_data['password']
-#             user=authenticate(request,username=email,password=password)
-#
-#
-#
-#             if user is not None:
-#                 print("Inside")
-#                 login(request, user)
-#
-#                 return redirect('home')
-#             else:
-#                 messages.error(request, "Invalid username or password")
-#
-#
-#
-#     else:
-#         login_form=LoginForm()
-#     return render(request, 'login/login.html',{'login_form':login_form})
-
-
-# @login_required
-# def logout_user(request):
-#     logout(request)
-#     return redirect('login_user')

@@ -14,7 +14,7 @@ def sendActivationEmail(userId):
 
     subLink = f"user/activate/{uid}/{token}/"
     mail_subject = "Activate your account."
-    htmlLink='emails/activation_email.html'
+    htmlLink='login/activation_email.html'
 
 
     sendEmailContent(user,subLink,mail_subject,htmlLink)
