@@ -132,6 +132,8 @@ AUTH_USER_MODEL = 'login.NewUser'
 
 
 
+
+
 # env_path = Path(r"D:/AllProjectFolders/PythonDjangoProjects/Project_env_files/blog_env_variables.txt")
 env_path = Path(r"/mnt/d/AllProjectFolders/PythonDjangoProjects/Project_env_files/blog_env_variables.txt")
 load_dotenv(dotenv_path=env_path)

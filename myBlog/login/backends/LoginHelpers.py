@@ -2,11 +2,6 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
 
-
-
-from django.core.exceptions import ValidationError
-from django.contrib.auth.password_validation import validate_password
-
 class PasswordValidationMixin:
 
     def validate_password_strength_and_match(self):
@@ -25,19 +20,3 @@ class PasswordValidationMixin:
             self.add_error('confirm_password', "Passwords do not match.")
 
 
-
-
-# def checkIfPasswordsAreSame(password, confirm_password):
-#     errorReason = None
-#
-#     if password and confirm_password:
-#
-#         try:
-#             validate_password(password)
-#         except ValidationError as e:
-#             errorReason=e.message
-#
-#         if password != confirm_password:
-#             errorReason=e.message
-#
-#     return errorReason
