@@ -1,19 +1,27 @@
 from django.urls import path
 
+from .Variables.VariableNames import register_subUrl, register_reverseName, login_subUrl, login_reverseName, \
+    logout_subUrl, logout_reverseName, activate_subUrl, activate_reverseName, forgot_password_subUrl, \
+    forgot_password_reverseName, reset_password_subUrl, reset_password_reverseName
 
-from login.views.ActivateUser import ActivateView
-from login.views.ForgotPasswordView import ForgotPassword
-from login.views.LoginViews import LoginUser, LogoutUser
-from login.views.RegisterView import RegisterUser
-from login.views.ResetPasswordView import ResetPasswordView
+from .views import (
+    RegisterUser,
+    LoginUser,
+    LogoutUser,
+    ActivateView,
+    ForgotPassword,
+    ResetPasswordView,
+)
+
+
 
 urlpatterns = [
-    path('register/', RegisterUser.as_view(), name='register_new_user'),
-    path('login/', LoginUser.as_view(), name='login_user'),
-    path('logout/', LogoutUser.as_view(), name='logout_user'),
-    path('activate/<str:uidb64>/<str:token>/', ActivateView.as_view(), name='activate'),
-    path('forgot_password/', ForgotPassword.as_view(), name='forgot_password'),
-    path('reset_password/<str:uidb64>/<str:token>/', ResetPasswordView.as_view(), name='reset_password'),
+    path(register_subUrl, RegisterUser.as_view(), name=register_reverseName),
+    path(login_subUrl, LoginUser.as_view(), name=login_reverseName),
+    path(logout_subUrl, LogoutUser.as_view(), name=logout_reverseName),
+    path(activate_subUrl, ActivateView.as_view(), name=activate_reverseName),
+    path(forgot_password_subUrl, ForgotPassword.as_view(), name=forgot_password_reverseName),
+    path(reset_password_subUrl, ResetPasswordView.as_view(), name=reset_password_reverseName),
 
 
 ]

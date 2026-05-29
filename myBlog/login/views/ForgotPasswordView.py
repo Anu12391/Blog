@@ -4,6 +4,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.cache import never_cache
 
+from login.Variables.VariableNames import login_subUrl
 from login.forms.forgotpassword import ForgotPasswordForm
 from login.services.authentication_logic.user_utils import getUserIdFromEmail
 from login.services.signals.EmailLinks.UserActivationEmail import sendForgotPasswordEmail
@@ -24,32 +25,13 @@ class ForgotPassword(View):
             print("forgot user", userId)
             sendForgotPasswordEmail(userId)
 
-            return redirect('login_user')
+            return redirect(login_subUrl)
         else:
             messages.error(request, "Email Doesnt Exist")
 
         return render(request, 'login/forgot_password.html', {'forgotPasswordForm': forgotPasswordForm})
 
 
-# @never_cache
-# def forgotpassword(request):
-#     if request.method == 'POST':
-#         forgotPasswordForm = ForgotPasswordForm(request.POST)
-#         if forgotPasswordForm.is_valid():
-#             email = forgotPasswordForm.cleaned_data['email']
-#             userId=getUserIdFromEmail(email)
-#             print("forgot user",userId)
-#             sendForgotPasswordEmail(userId)
-#
-#
-#
-#             return redirect('login_user')
-#         else:
-#             messages.error(request, "Email Doesnt Exist")
-#     else:
-#
-#         forgotPasswordForm = ForgotPasswordForm()
-#     return render(request, 'login/forgot_password.html', {'forgotPasswordForm': forgotPasswordForm})
 
 
 

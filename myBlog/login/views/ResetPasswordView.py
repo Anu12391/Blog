@@ -1,26 +1,15 @@
-import logging
-
 from django.contrib.auth.forms import logger
-
-# Your custom imports
-
-logger = logging.getLogger(__name__)
-
 from django.shortcuts import redirect, render
+from django.utils.decorators import method_decorator
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
-from django.views.decorators.cache import never_cache
-from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.cache import never_cache
 
-import logging
-
-# Your custom imports
-from login.services.authentication_logic.user_utils import getUserByUId
-from login.services.authentication_logic.tokens import account_activation_token
+from login.Variables.VariableNames import login_reverseName
 from login.forms.resetpasswordform import ResetPasswordForm
-
-logger = logging.getLogger(__name__)
+from login.services.authentication_logic.tokens import account_activation_token
+from login.services.authentication_logic.user_utils import getUserByUId
 
 
 @method_decorator(never_cache, name='dispatch')
@@ -52,7 +41,7 @@ class ResetPasswordView(View):
 
             if form.is_valid():
                 form.save()
-                return redirect("login_user")
+                return redirect(login_reverseName)
 
             logger.warning(f"Password reset validation failed for user ID {user.pk}.")
             return render(request, self.template_name, {"resetPasswordForm": form})
