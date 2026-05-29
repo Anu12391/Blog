@@ -1,31 +1,55 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.decorators.cache import never_cache
-from myBlog import settings
+
 from login.forms.forgotpassword import ForgotPasswordForm
 from login.services.authentication_logic.user_utils import getUserIdFromEmail
 from login.services.signals.EmailLinks.UserActivationEmail import sendForgotPasswordEmail
+from myBlog import settings
 
 
-@never_cache
-def forgotpassword(request):
-    if request.method == 'POST':
+@method_decorator(never_cache, name='dispatch')
+class ForgotPassword(View):
+    def get(self, request):
+        forgotPasswordForm = ForgotPasswordForm()
+        return render(request, 'login/forgot_password.html', {'forgotPasswordForm': forgotPasswordForm})
+
+    def post(self, request):
         forgotPasswordForm = ForgotPasswordForm(request.POST)
         if forgotPasswordForm.is_valid():
             email = forgotPasswordForm.cleaned_data['email']
-            userId=getUserIdFromEmail(email)
-            print("forgot user",userId)
+            userId = getUserIdFromEmail(email)
+            print("forgot user", userId)
             sendForgotPasswordEmail(userId)
-
-
 
             return redirect('login_user')
         else:
             messages.error(request, "Email Doesnt Exist")
-    else:
 
-        forgotPasswordForm = ForgotPasswordForm()
-    return render(request, 'login/forgot_password.html', {'forgotPasswordForm': forgotPasswordForm})
+        return render(request, 'login/forgot_password.html', {'forgotPasswordForm': forgotPasswordForm})
+
+
+# @never_cache
+# def forgotpassword(request):
+#     if request.method == 'POST':
+#         forgotPasswordForm = ForgotPasswordForm(request.POST)
+#         if forgotPasswordForm.is_valid():
+#             email = forgotPasswordForm.cleaned_data['email']
+#             userId=getUserIdFromEmail(email)
+#             print("forgot user",userId)
+#             sendForgotPasswordEmail(userId)
+#
+#
+#
+#             return redirect('login_user')
+#         else:
+#             messages.error(request, "Email Doesnt Exist")
+#     else:
+#
+#         forgotPasswordForm = ForgotPasswordForm()
+#     return render(request, 'login/forgot_password.html', {'forgotPasswordForm': forgotPasswordForm})
 
 
 
