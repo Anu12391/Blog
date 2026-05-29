@@ -1,46 +1,94 @@
+import logging
+
 from django.contrib.auth.forms import logger
-from django.contrib.auth.tokens import default_token_generator
+
+# Your custom imports
+
+logger = logging.getLogger(__name__)
+
 from django.shortcuts import redirect, render
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.cache import never_cache
+from django.utils.decorators import method_decorator
+from django.views import View
 
+import logging
+
+# Your custom imports
 from login.services.authentication_logic.user_utils import getUserByUId
-
 from login.services.authentication_logic.tokens import account_activation_token
-
 from login.forms.resetpasswordform import ResetPasswordForm
 
+logger = logging.getLogger(__name__)
 
-@never_cache
-def resetPassword(request, uidb64, token):
 
-    try:
+@method_decorator(never_cache, name='dispatch')
+class ResetPasswordView(View):
+    template_name = "login/reset_password_email.html"
+    invalid_template = "login/invalid_link.html"
 
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = getUserByUId(uid)
+    def get_user(self, uidb64):
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            return getUserByUId(uid)
+        except (TypeError, ValueError, OverflowError):
+            return None
 
-    except:
+    def get(self, request, uidb64, token):
+        user = self.get_user(uidb64)
 
-        user = None
+        if user and account_activation_token.check_token(user, token):
+            form = ResetPasswordForm(user)
+            return render(request, self.template_name, {"resetPasswordForm": form})
 
-    if user and account_activation_token.check_token(user, token):
+        return render(request, self.invalid_template)
 
-        if request.method == "POST":
-            resetPasswordForm = ResetPasswordForm(user, request.POST)
+    def post(self, request, uidb64, token):
+        user = self.get_user(uidb64)
 
-            if resetPasswordForm.is_valid():
-                resetPasswordForm.save()
+        if user and account_activation_token.check_token(user, token):
+            form = ResetPasswordForm(user, request.POST)
+
+            if form.is_valid():
+                form.save()
                 return redirect("login_user")
-            else:
-                logger.warning(f"Password reset validation failed for user ID {user.pk}.")
 
-        else:
-            resetPasswordForm = ResetPasswordForm(user)
+            logger.warning(f"Password reset validation failed for user ID {user.pk}.")
+            return render(request, self.template_name, {"resetPasswordForm": form})
 
-        return render(request, "login/reset_password_email.html",{"resetPasswordForm":resetPasswordForm})
-
-    else:
-        return render(request, "login/invalid_link.html")
+        return render(request, self.invalid_template)
 
 
+# @never_cache
+# def resetPassword(request, uidb64, token):
+#
+#     try:
+#
+#         uid = force_str(urlsafe_base64_decode(uidb64))
+#         user = getUserByUId(uid)
+#
+#     except:
+#
+#         user = None
+#
+#     if user and account_activation_token.check_token(user, token):
+#
+#         if request.method == "POST":
+#             resetPasswordForm = ResetPasswordForm(user, request.POST)
+#
+#             if resetPasswordForm.is_valid():
+#                 resetPasswordForm.save()
+#                 return redirect("login_user")
+#             else:
+#                 logger.warning(f"Password reset validation failed for user ID {user.pk}.")
+#
+#         else:
+#             resetPasswordForm = ResetPasswordForm(user)
+#
+#         return render(request, "login/reset_password_email.html",{"resetPasswordForm":resetPasswordForm})
+#
+#     else:
+#         return render(request, "login/invalid_link.html")
+#
+#
