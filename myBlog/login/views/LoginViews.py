@@ -8,6 +8,7 @@ from django.views.decorators.cache import never_cache
 
 from login.forms.login import LoginForm
 from myBlog import settings
+from common.Constants.VariableNames import AuthUrls
 
 
 @method_decorator(never_cache, name='dispatch')
@@ -40,7 +41,7 @@ class LoginUser(View):
 class LogoutUser(LoginRequiredMixin,View):
     def get(self, request):
         logout(request)
-        return redirect('login_user')
+        return redirect(AuthUrls.Login.login_redirectName)
 
 
 

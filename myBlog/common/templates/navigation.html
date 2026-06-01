@@ -25,11 +25,11 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
             {% if user.is_authenticated %}
-                <li><a class="dropdown-item" href="{% url 'logout_user' %}">Logout</a></li>
+                <li><a class="dropdown-item" href="{% url 'auth:logout_user' %}">Logout</a></li>
             {% else %}
-                <li><a class="dropdown-item" href="{% url 'login_user' %}">Login</a></li>
-                <li><a class="dropdown-item" href="{% url 'register_new_user' %}">Register</a></li>
-                <li><a class="dropdown-item" href="{% url 'forgot_password' %}">Forgot Password</a></li>
+                <li><a class="dropdown-item" href="{% url 'auth:login_user' %}">Login</a></li>
+                <li><a class="dropdown-item" href="{% url 'auth:register_new_user' %}">Register</a></li>
+                <li><a class="dropdown-item" href="{% url 'auth:forgot_password' %}">Forgot Password</a></li>
             {% endif %}
           </ul>
         </li>

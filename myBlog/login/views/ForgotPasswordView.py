@@ -4,7 +4,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.cache import never_cache
 
-from common.Variables import login_subUrl
+from common.Constants.VariableNames import AuthUrls
 from login.forms.forgotpassword import ForgotPasswordForm
 from login.services.authentication_logic.user_utils import getUserIdFromEmail
 from login.services.signals.EmailLinks.UserActivationEmail import sendForgotPasswordEmail
@@ -25,7 +25,8 @@ class ForgotPassword(View):
             print("forgot user", userId)
             sendForgotPasswordEmail(userId)
 
-            return redirect(login_subUrl)
+            # return redirect(AuthUrls.Login.login_subUrl)
+            return redirect(AuthUrls.Login.login_redirectName)
         else:
             messages.error(request, "Email Doesnt Exist")
 

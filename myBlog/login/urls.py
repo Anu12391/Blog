@@ -1,5 +1,5 @@
 from django.urls import path
-from common.Variables.VariableNames import AuthUrls as URL
+from common.Constants.VariableNames import AuthUrls as URL
 
 
 
@@ -12,7 +12,7 @@ from .views import (
     ResetPasswordView,
 )
 
-
+app_name = "auth"
 
 urlpatterns = [
     path(URL.Register.register_subUrl, RegisterUser.as_view(), name=URL.Register.register_reverseName),

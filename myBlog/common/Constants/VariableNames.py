@@ -1,3 +1,6 @@
+from common.Constants.ApplicationNames import AppNames as APP
+
+
 class AuthUrls:
 
     class Register:
@@ -7,6 +10,7 @@ class AuthUrls:
     class Login:
         login_subUrl="login/"
         login_reverseName="login_user"
+        login_redirectName=f"{APP.AuthApp.app_name}:{login_reverseName}"
 
     class Logout:
         logout_subUrl = "logout/"
@@ -19,6 +23,7 @@ class AuthUrls:
     class ForgotPassword:
         forgot_password_subUrl = 'forgot_password/'
         forgot_password_reverseName = 'forgot_password'
+        forgot_password_redirectName = f"{APP.AuthApp.app_name}:{forgot_password_reverseName}"
 
     class PasswordReset:
         reset_password_subUrl = 'reset_password/<str:uidb64>/<str:token>/'

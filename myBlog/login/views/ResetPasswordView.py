@@ -6,7 +6,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.views import View
 from django.views.decorators.cache import never_cache
 
-from common.Variables import login_reverseName
+from common.Constants.VariableNames import AuthUrls
 from login.forms.resetpasswordform import ResetPasswordForm
 from login.services.authentication_logic.tokens import account_activation_token
 from login.services.authentication_logic.user_utils import getUserByUId
@@ -41,7 +41,7 @@ class ResetPasswordView(View):
 
             if form.is_valid():
                 form.save()
-                return redirect(login_reverseName)
+                return redirect(AuthUrls.Login.login_redirectName)
 
             logger.warning(f"Password reset validation failed for user ID {user.pk}.")
             return render(request, self.template_name, {"resetPasswordForm": form})
