@@ -6,7 +6,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.views import View
 from django.views.decorators.cache import never_cache
 
-from login.Variables.VariableNames import login_reverseName
+from common.Variables import login_reverseName
 from login.forms.resetpasswordform import ResetPasswordForm
 from login.services.authentication_logic.tokens import account_activation_token
 from login.services.authentication_logic.user_utils import getUserByUId
