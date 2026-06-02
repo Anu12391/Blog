@@ -5,3 +5,6 @@ class AppNames:
 
     class DashBoardApp:
         app_name = "dashboard"
+
+    class MyProfile:
+        app_name = "myProfile"

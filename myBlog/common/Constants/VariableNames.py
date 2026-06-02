@@ -3,8 +3,6 @@ from common.Constants.ApplicationNames import AppNames as APP
 
 class AuthUrls:
 
-
-
     class Dashboard:
         dashboard_subUrl = ""
         dashboard_reverseName = 'home'
@@ -38,6 +36,12 @@ class AuthUrls:
         reset_password_subUrl = 'reset_password/<str:uidb64>/<str:token>/'
         reset_password_reverseName = 'reset_password'
         reset_password_redirectName = f"{APP.AuthApp.app_name}:{reset_password_reverseName}"
+
+
+    class MyProfile:
+        myProfile_subUrl = "my-profile/"
+        myProfile_reverseName = 'my_profile'
+        myProfile_redirectName = f"{APP.MyProfile.app_name}:{myProfile_reverseName}"
 
 
 
