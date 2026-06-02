@@ -30,7 +30,7 @@ class LoginUser(View):
             if user is not None:
                 print("Inside")
                 login(request, user)
-                return redirect('home')
+                return redirect(AuthUrls.Dashboard.dashboard_redirectName)
             else:
                 messages.error(request, "Invalid username or password")
 

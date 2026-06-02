@@ -15,6 +15,7 @@ from .views import (
 app_name = "auth"
 
 urlpatterns = [
+
     path(URL.Register.register_subUrl, RegisterUser.as_view(), name=URL.Register.register_reverseName),
     path(URL.Login.login_subUrl, LoginUser.as_view(), name=URL.Login.login_reverseName),
     path(URL.Logout.logout_subUrl, LogoutUser.as_view(), name=URL.Logout.logout_reverseName),

@@ -3,9 +3,17 @@ from common.Constants.ApplicationNames import AppNames as APP
 
 class AuthUrls:
 
+
+
+    class Dashboard:
+        dashboard_subUrl = ""
+        dashboard_reverseName = 'home'
+        dashboard_redirectName = f"{APP.DashBoardApp.app_name}:{dashboard_reverseName}"
+
     class Register:
         register_subUrl="register/"
         register_reverseName='register_new_user'
+        register_redirectName = f"{APP.AuthApp.app_name}:{register_reverseName}"
 
     class Login:
         login_subUrl="login/"
@@ -15,6 +23,7 @@ class AuthUrls:
     class Logout:
         logout_subUrl = "logout/"
         logout_reverseName = "logout_user"
+        logout_redirectName = f"{APP.AuthApp.app_name}:{logout_reverseName}"
 
     class UserActivation:
         activate_subUrl = "'activate/<str:uidb64>/<str:token>/'"
@@ -28,6 +37,7 @@ class AuthUrls:
     class PasswordReset:
         reset_password_subUrl = 'reset_password/<str:uidb64>/<str:token>/'
         reset_password_reverseName = 'reset_password'
+        reset_password_redirectName = f"{APP.AuthApp.app_name}:{reset_password_reverseName}"
 
 
 
