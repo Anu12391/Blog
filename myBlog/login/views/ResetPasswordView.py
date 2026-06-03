@@ -9,7 +9,7 @@ from django.views.decorators.cache import never_cache
 from common.Constants.VariableNames import AuthUrls
 from login.forms.resetpasswordform import ResetPasswordForm
 from login.services.authentication_logic.tokens import account_activation_token
-from login.services.authentication_logic.user_utils import getUserByUId
+from common.user_utils import getUserByUId
 
 
 @method_decorator(never_cache, name='dispatch')

@@ -1,14 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError
-
-
-
 
 from login.models import NewUser
 
-from login.services.authentication_logic.user_utils import createNewUser
+from common.user_utils import createNewUser
 
 from login.backends.LoginHelpers import PasswordValidationMixin
 

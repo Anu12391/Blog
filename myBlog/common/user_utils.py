@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from login.models import NewUser
@@ -46,5 +47,12 @@ def getUserFromEmail(email):
 
 def getUserFromUserId(userID):
     return NewUser.objects.get(pk=userID)
+
+
+
+def getUserData(userPk):
+    User = get_user_model()
+    user = User.objects.get(pk=userPk)
+    return user
 
 

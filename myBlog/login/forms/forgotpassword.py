@@ -2,7 +2,7 @@
 
 from django import forms
 
-from login.services.authentication_logic.user_utils import isEmailRegistered
+from common.user_utils import isEmailRegistered
 
 
 class ForgotPasswordForm(forms.Form):

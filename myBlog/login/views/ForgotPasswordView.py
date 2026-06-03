@@ -6,7 +6,7 @@ from django.views.decorators.cache import never_cache
 
 from common.Constants.VariableNames import AuthUrls
 from login.forms.forgotpassword import ForgotPasswordForm
-from login.services.authentication_logic.user_utils import getUserIdFromEmail
+from common.user_utils import getUserIdFromEmail
 from login.services.signals.EmailLinks.UserActivationEmail import sendForgotPasswordEmail
 from myBlog import settings
 

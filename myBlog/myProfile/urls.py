@@ -8,19 +8,6 @@ app_name = AppNames.MyProfile.app_name
 
 urlpatterns = [
 
-
-path(
-        URL.MyProfile.myProfile_subUrl,
-        MyProfileView.as_view(),
-        name=URL.MyProfile.myProfile_reverseName
-    ),
-
-# path(
-#         "profile/",
-#         MyProfileView.as_view(),
-#         name="myprofile"
-#     ),
-
-
+path(URL.MyProfile.myProfile_subUrl,MyProfileView.as_view(),name=URL.MyProfile.myProfile_reverseName),
 
 ]

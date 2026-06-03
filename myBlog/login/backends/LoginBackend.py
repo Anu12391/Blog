@@ -2,7 +2,7 @@ from django.contrib.auth.backends import ModelBackend
 
 from login.models import NewUser
 
-from login.services.authentication_logic.user_utils import getUserFromEmail,getUserFromUserId
+from common.user_utils import getUserFromEmail,getUserFromUserId
 
 
 class LoginBackend(ModelBackend):

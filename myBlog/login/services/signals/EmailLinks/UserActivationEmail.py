@@ -1,6 +1,5 @@
 from celery import shared_task
-from login.models import NewUser
-from login.services.authentication_logic.user_utils import getUserByUserId, getUId, getToken
+from common.user_utils import getUserByUserId, getUId, getToken
 from login.services.signals.EmailLinks.SendEmail import sendEmailContent
 
 from myBlog import settings
