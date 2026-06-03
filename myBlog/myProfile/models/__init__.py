@@ -1,1 +1,1 @@
-from .UserProfile import EditProfile
+from .UserProfile import Profile

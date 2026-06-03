@@ -9,9 +9,9 @@ from myProfile.forms.EditProfileForm import EditProfileForm
 class MyProfileView(LoginRequiredMixin,View):
     def get(self, request):
 
-        userPk=request.user.pk
+        userPK=request.user.pk
 
-        userData=getUserData(userPk)
+        userData=getUserData(userPK)
 
         editProfileForm=EditProfileForm(instance=userData)
 

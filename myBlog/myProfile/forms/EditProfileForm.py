@@ -1,10 +1,9 @@
 from django.forms import ModelForm
 
-from login import models
-from myProfile.models.UserProfile import EditProfile
+from myProfile.models.UserProfile import Profile
 
 
 class EditProfileForm(ModelForm):
     class Meta:
-        model=EditProfile
-        fields=('user','birthDate','about')
+        model=Profile
+        fields=('birthDate','about')

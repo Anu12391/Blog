@@ -50,9 +50,9 @@ def getUserFromUserId(userID):
 
 
 
-def getUserData(userPk):
+def getUserData(userPK):
     User = get_user_model()
-    user = User.objects.get(pk=userPk)
+    user = User.objects.get(pk=userPK)
     return user
 
 
