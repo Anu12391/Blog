@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'dashboard',
     'login',
+    'myProfile',
 ]
 
 MIDDLEWARE = [

@@ -4,7 +4,7 @@ from common.Constants.ApplicationNames import AppNames
 from common.Constants.VariableNames import AuthUrls as URL
 from myProfile.Views.MyProfileView import MyProfileView
 
-app_name = AppNames.MyProfile
+app_name = AppNames.MyProfile.app_name
 
 urlpatterns = [
 
@@ -14,6 +14,13 @@ path(
         MyProfileView.as_view(),
         name=URL.MyProfile.myProfile_reverseName
     ),
+
+# path(
+#         "profile/",
+#         MyProfileView.as_view(),
+#         name="myprofile"
+#     ),
+
 
 
 ]

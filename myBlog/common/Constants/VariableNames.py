@@ -39,8 +39,8 @@ class AuthUrls:
 
 
     class MyProfile:
-        myProfile_subUrl = "my-profile/"
-        myProfile_reverseName = 'my_profile'
+        myProfile_subUrl = "profile/"
+        myProfile_reverseName = 'myprofile'
         myProfile_redirectName = f"{APP.MyProfile.app_name}:{myProfile_reverseName}"
 
 

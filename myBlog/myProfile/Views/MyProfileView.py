@@ -4,4 +4,4 @@ from django.views import View
 
 class MyProfileView(View):
     def get(self, request):
-        return render(request, "myProfile/myProfile.html")
+        return render(request, 'myProfile/my_profile.html',{})
