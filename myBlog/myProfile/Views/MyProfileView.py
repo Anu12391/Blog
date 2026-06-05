@@ -12,8 +12,11 @@ class MyProfileView(LoginRequiredMixin,View):
         userPK=request.user.pk
 
         userData=getUserData(userPK)
+        print(userData)
 
-        editProfileForm=EditProfileForm(instance=userData)
+
+
+        editProfileForm = EditProfileForm(instance=userData)
 
         context = {'userData':userData,'editProfileForm':editProfileForm}
 

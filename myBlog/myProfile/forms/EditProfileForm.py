@@ -1,9 +1,22 @@
-from django.forms import ModelForm
+from django import forms
 
 from myProfile.models.UserProfile import Profile
 
 
-class EditProfileForm(ModelForm):
+class EditProfileForm(forms.ModelForm):
+    email = forms.EmailField(
+        label="Email",
+        widget=forms.EmailInput(attrs={"readonly": True}),
+    )
+
+
     class Meta:
         model=Profile
-        fields=('birthDate','about')
+        fields=('email','birthDate','about')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs['readonly'] = True
+
+        # if self.instance and self.instance.user:
+        #     self.fields['email'].initial = self.instance.user.email
