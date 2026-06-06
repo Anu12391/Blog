@@ -18,7 +18,9 @@ class EditProfileForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['email'].widget.attrs['readonly'] = True
+
+
+
 
         if self.instance and self.instance.user:
             self.fields['email'].initial = self.instance.user.email

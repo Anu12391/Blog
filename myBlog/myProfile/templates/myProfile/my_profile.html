@@ -11,7 +11,7 @@
                         <form method="POST" action="{% url 'myProfile:myprofile' %}">
                                 {% csrf_token %}
 
-                            {% include "components/text.html" with field=editProfileForm.email  %}
+                            {% include "components/email_field.html" with field=editProfileForm.email  %}
                             {% include "components/date_picker.html" with field=editProfileForm.birthDate  %}
                             {% include "components/textarea.html" with field=editProfileForm.about  %}
 
@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-   
+
 
     </div>
   <script>
