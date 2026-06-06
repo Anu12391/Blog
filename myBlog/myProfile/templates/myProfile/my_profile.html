@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% block title %} Registration Form {% endblock title %}
+{% block title %} Update Profile {% endblock title %}
 {% block body %}
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
     <div class="row justify-content-center ">
         <div class="col-md-6 ">
             <div class="card">
@@ -11,9 +11,11 @@
                         <form method="POST" action="{% url 'myProfile:myprofile' %}">
                                 {% csrf_token %}
 
-                            {% include "components/text.html" with field=editProfileForm.email %}
-                            {% include "components/email_field.html" with field=editProfileForm.birthDate %}
-                            {% include "components/textarea.html" with field=editProfileForm.about %}
+                            {% include "components/text.html" with field=editProfileForm.email  %}
+                            {% include "components/date_picker.html" with field=editProfileForm.birthDate  %}
+                            {% include "components/textarea.html" with field=editProfileForm.about  %}
+
+
 
 
                     <button type="submit"
