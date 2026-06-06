@@ -4,6 +4,7 @@ from django.utils.http import urlsafe_base64_encode
 from login.models import NewUser
 
 from login.services.authentication_logic.tokens import account_activation_token
+from myProfile.models import Profile
 
 
 def createNewUser(cleaned_data):
@@ -53,6 +54,7 @@ def getUserFromUserId(userID):
 def getUserData(userPK):
     User = get_user_model()
     user = User.objects.get(pk=userPK)
-    return user
+    profile, created = Profile.objects.get_or_create(user=user)
+    return profile
 
 
