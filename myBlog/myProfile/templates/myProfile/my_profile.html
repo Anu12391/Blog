@@ -10,6 +10,7 @@
 
                         <form method="POST" action="{% url 'myProfile:myprofile' %}">
                                 {% csrf_token %}
+                            {% include "components/profile_pic.html" with field=form.profile_pic %}
 
                             {% include "components/email_field.html" with field=editProfileForm.email  %}
                             {% include "components/date_picker.html" with field=editProfileForm.birthDate  %}
@@ -44,5 +45,28 @@
                 .addEventListener("click", function() {
                         window.history.back();
                 });
+
+
+
+
+
+
+function previewImage(input) {
+    const preview = document.getElementById('avatar-preview');
+
+    // Check if a file was actually selected
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        // When the file is done reading locally, swap the image src attribute
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+        }
+
+        // Read the local file as a temporary Data URL
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
         </script>
 {% endblock body %}

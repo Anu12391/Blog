@@ -1,0 +1,29 @@
+ <div class="mt-2">
+
+  <label class="form-label" for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                    </label>
+<div class="profile-card">
+    <div class="profile-avatar-container">
+        {% if field.value %}
+                <img id="avatar-preview" src="{{ field.value.url }}" alt="Avatar" class="large-avatar">
+            {% else %}
+                <img id="avatar-preview" src="/media/default.jpg" alt="Default Avatar" class="large-avatar">
+            {% endif %}
+    </div>
+</div>
+            <input
+                type="file"
+                name="{{ field.name }}"
+                id="{{field.id_for_label}}"
+                accept="image/*"
+                class="form-control-file"
+                onchange="previewImage(this)"
+            >
+
+            {% if field.id_for_label.errors %}
+                <div class="error-messages">
+                    {{ field.id_for_label.errors }}
+                </div>
+            {% endif %}
+ </div>
