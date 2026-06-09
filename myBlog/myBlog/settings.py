@@ -132,7 +132,9 @@ STATIC_URL = 'static/'
 AUTH_USER_MODEL = 'login.NewUser'
 
 
-
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 
 # env_path = Path(r"D:/AllProjectFolders/PythonDjangoProjects/Project_env_files/blog_env_variables.txt")

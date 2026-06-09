@@ -1,29 +1,30 @@
- <div class="mt-2">
+<div class="mb-4 w-100">
+    <label class="form-label d-block fw-bold" for="{{ field.id_for_label }}">
+        {{ field.label }}
+    </label>
 
-  <label class="form-label" for="{{ field.id_for_label }}">
-                            {{ field.label }}
-                    </label>
-<div class="profile-card">
-    <div class="profile-avatar-container">
-        {% if field.value %}
-                <img id="avatar-preview" src="{{ field.value.url }}" alt="Avatar" class="large-avatar">
+    <div class="profile-card mb-3">
+        <div class="profile-avatar-container w-100">
+            {% if field.value %}
+                <img id="avatar-preview" src="{{ field.value.url }}" alt="Avatar" class="img-fluid w-100 rounded">
             {% else %}
-                <img id="avatar-preview" src="/media/default.jpg" alt="Default Avatar" class="large-avatar">
+                <img id="avatar-preview" src="/media/default.jpg" alt="Default Avatar" class="img-fluid w-100 rounded">
             {% endif %}
+        </div>
     </div>
-</div>
-            <input
-                type="file"
-                name="{{ field.name }}"
-                id="{{field.id_for_label}}"
-                accept="image/*"
-                class="form-control-file"
-                onchange="previewImage(this)"
-            >
 
-            {% if field.id_for_label.errors %}
-                <div class="error-messages">
-                    {{ field.id_for_label.errors }}
-                </div>
-            {% endif %}
- </div>
+    <input
+        type="file"
+        name="{{ field.name }}"
+        id="{{ field.id_for_label }}"
+        accept="image/*"
+        class="form-control"
+        onchange="previewImage(this)"
+    >
+
+    {% if field.errors %}
+        <div class="text-danger small mt-1">
+            {{ field.errors }}
+        </div>
+    {% endif %}
+</div>

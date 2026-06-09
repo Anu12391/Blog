@@ -1,72 +1,45 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block head %}
+ <script src="{% static 'js/pic_display.js' %}"></script>
+{% endblock head %}
 {% block title %} Update Profile {% endblock title %}
+
 {% block body %}
 <div class="container mt-5 mb-5">
-    <div class="row justify-content-center ">
-        <div class="col-md-6 ">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title text-center">Profile</h3>
-
-                        <form method="POST" action="{% url 'myProfile:myprofile' %}">
-                                {% csrf_token %}
-                            {% include "components/profile_pic.html" with field=form.profile_pic %}
-
-                            {% include "components/email_field.html" with field=editProfileForm.email  %}
-                            {% include "components/date_picker.html" with field=editProfileForm.birthDate  %}
-                            {% include "components/textarea.html" with field=editProfileForm.about  %}
-
-
-
-
-                    <button type="submit"
-                            class="btn btn-primary"
-                            id="profile_register_btn">
-                                        Update Profile
-                    </button>
-
-                    <button type="button"
-                            class="btn btn-danger"
-                            id="profile_cancel_btn">
-                                        Cancel
-                    </button>
-
-
-                        </form>
+                    <h3 class="card-title text-center mb-0">Profile</h3>
                 </div>
-            </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'myProfile:myprofile' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        {% include "components/profile_pic.html" with field=form.profile_pic %}
+
+                        {% include "components/email_field.html" with field=editProfileForm.email %}
+                        {% include "components/date_picker.html" with field=editProfileForm.birthDate %}
+                        {% include "components/textarea.html" with field=editProfileForm.about %}
+
+                        <div class="d-flex  mt-4">
+                            <button type="submit" class="btn btn-primary" id="profile_register_btn">
+                                Update Profile
+                            </button>
+                            <button type="button" class="btn btn-danger ms-2" id="profile_cancel_btn">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div> </div>
         </div>
     </div>
+</div>
 
-
-    </div>
-  <script>
-            document.getElementById("profile_cancel_btn")
-                .addEventListener("click", function() {
-                        window.history.back();
-                });
-
-
-
-
-
-
-function previewImage(input) {
-    const preview = document.getElementById('avatar-preview');
-
-    // Check if a file was actually selected
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-
-        // When the file is done reading locally, swap the image src attribute
-        reader.onload = function(e) {
-            preview.src = e.target.result;
-        }
-
-        // Read the local file as a temporary Data URL
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-        </script>
+<script>
+    document.getElementById("profile_cancel_btn").addEventListener("click", function() {
+        window.history.back();
+    });
+</script>
 {% endblock body %}
