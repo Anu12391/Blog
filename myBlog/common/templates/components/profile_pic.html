@@ -1,14 +1,16 @@
+{% load static %}
+
 <div class="mb-4 w-100">
-    <label class="form-label d-block fw-bold" for="{{ field.id_for_label }}">
+    <label class="form-label d-block fw-bold mb-2">
         {{ field.label }}
     </label>
 
-    <div class="profile-card mb-3">
-        <div class="profile-avatar-container w-100">
-            {% if field.value and field.value.url%}
-                <img id="avatar-preview"   src="{{ field.value.url }}" alt="Avatar" class="img-fluid w-100 rounded">
+    <div class="profile-card mb-3 text-center position-relative">
+        <div class="profile-avatar-container mx-auto" style="max-width: 200px;">
+            {% if field.value and field.value.url %}
+                <img id="avatar-preview" src="{{ field.value.url }}" alt="Avatar" class="img-fluid rounded-circle border shadow-sm">
             {% else %}
-                <img id="avatar-preview" src="{% static 'images/default-image.jpg' %}" alt="Default Avatar" class="img-fluid w-100 rounded">
+                <img id="avatar-preview" src="{% static 'images/default-image.jpg' %}" alt="Default Avatar" class="img-fluid rounded-circle border shadow-sm">
             {% endif %}
         </div>
     </div>
@@ -18,13 +20,42 @@
         name="{{ field.name }}"
         id="{{ field.id_for_label }}"
         accept="image/*"
-        class="form-control"
-        onchange="previewImage(this)"
+        class="d-none"
+        onchange="handleImageUpload(this, '{{ field.id_for_label }}')"
+    >
+    <input
+        type="checkbox"
+        name="{{ field.name }}-clear"
+        id="{{ field.id_for_label }}-clear"
+        class="d-none"
     >
 
+    <div class="dropdown text-center">
+        <button class="btn btn-outline-secondary dropdown-toggle btn-sm" type="button" id="profileActionsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Change Photo
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="profileActionsDropdown">
+            <li>
+                <button class="dropdown-item" type="button" onclick="triggerFileInput('{{ field.id_for_label }}')">
+                    Upload New Photo
+                </button>
+            </li>
+            {% if field.value and field.value.url %}
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <button class="dropdown-item text-danger" type="button" onclick="handleImageDeletion('{{ field.id_for_label }}', '{% static 'images/default-image.jpg' %}')">
+                        Remove Photo
+                    </button>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+
     {% if field.errors %}
-        <div class="text-danger small mt-1">
+        <div class="text-danger small mt-2 text-center">
             {{ field.errors }}
         </div>
     {% endif %}
 </div>
+
+t>
