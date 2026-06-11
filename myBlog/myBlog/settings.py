@@ -17,6 +17,11 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# The URL used to access these files in the browser
+MEDIA_URL = '/media/'
+
+# The absolute filesystem path where files are saved on your computer
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -135,6 +140,7 @@ AUTH_USER_MODEL = 'login.NewUser'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
 
 
 # env_path = Path(r"D:/AllProjectFolders/PythonDjangoProjects/Project_env_files/blog_env_variables.txt")

@@ -17,7 +17,7 @@
                     <form method="POST" action="{% url 'myProfile:myprofile' %}" enctype="multipart/form-data">
                         {% csrf_token %}
 
-                        {% include "components/profile_pic.html" with field=form.profile_pic %}
+                        {% include "components/profile_pic.html" with field=editProfileForm.profile_pic %}
 
                         {% include "components/email_field.html" with field=editProfileForm.email %}
                         {% include "components/date_picker.html" with field=editProfileForm.birthDate %}

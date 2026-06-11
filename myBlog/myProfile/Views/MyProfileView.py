@@ -16,6 +16,7 @@ class MyProfileView(LoginRequiredMixin,View):
         print(profile_instance.user.email)
         print(profile_instance.about)
         print(profile_instance.birthDate)
+        print(profile_instance.profile_pic)
 
 
 
@@ -29,8 +30,10 @@ class MyProfileView(LoginRequiredMixin,View):
     def post(self, request):
         userPK = request.user.pk
         profile_instance = getUserData(userPK)
+        print("in POst ")
+        print(profile_instance.profile_pic)
 
-        editProfileForm=EditProfileForm(request.POST,instance=profile_instance)
+        editProfileForm=EditProfileForm(request.POST,request.FILES,instance=profile_instance)
         context = {'profileData': profile_instance, 'editProfileForm': editProfileForm}
 
         if editProfileForm.is_valid():

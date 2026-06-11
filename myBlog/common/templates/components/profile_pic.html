@@ -5,10 +5,10 @@
 
     <div class="profile-card mb-3">
         <div class="profile-avatar-container w-100">
-            {% if field.value %}
-                <img id="avatar-preview" src="{{ field.value.url }}" alt="Avatar" class="img-fluid w-100 rounded">
+            {% if field.value and field.value.url%}
+                <img id="avatar-preview"   src="{{ field.value.url }}" alt="Avatar" class="img-fluid w-100 rounded">
             {% else %}
-                <img id="avatar-preview" src="/media/default.jpg" alt="Default Avatar" class="img-fluid w-100 rounded">
+                <img id="avatar-preview" src="{% static 'images/default-image.jpg' %}" alt="Default Avatar" class="img-fluid w-100 rounded">
             {% endif %}
         </div>
     </div>

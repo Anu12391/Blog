@@ -1,7 +1,9 @@
+
 from django.urls import path
 
 from common.Constants.ApplicationNames import AppNames
 from common.Constants.VariableNames import AuthUrls as URL
+
 from myProfile.Views.MyProfileView import MyProfileView
 
 app_name = AppNames.MyProfile.app_name
