@@ -1,8 +1,10 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
+from login.backends.LoginHelpers import PasswordValidationMixin
 
-class MyCustomPasswordChangeForm(forms.Form):
+
+class MyCustomPasswordChangeForm(PasswordValidationMixin,forms.Form):
     current_password = forms.CharField(
         widget=forms.PasswordInput(attrs={'placeholder': 'Enter current password'}),
         label="Current Password"
@@ -25,17 +27,20 @@ class MyCustomPasswordChangeForm(forms.Form):
     def clean_current_password(self):
         """ Manually verify the old password against the database """
         current_password = self.cleaned_data.get('current_password')
-        if self.user and not self.user.check_password(current_password):
-            raise ValidationError("Your current password is incorrect.")
+        if self.user and self.user.is_authenticated:
+            if self.user and not self.user.check_password(current_password):
+                raise ValidationError("Your current password is incorrect.")
+        else:
+            raise ValidationError("You must be logged in to change your password.")
         return current_password
 
     def clean(self):
-        """ Manually verify that the two new passwords match """
-        cleaned_data = super().clean()
-        new_password = cleaned_data.get('new_password')
-        confirm_password = cleaned_data.get('confirm_password')
 
-        if new_password and confirm_password and new_password != confirm_password:
-            raise ValidationError({"confirm_password": "New passwords do not match."})
+        cleaned_data = super().clean()
+
+
+        self.validate_password_strength_and_match()
+
+
 
         return cleaned_data

@@ -1,13 +1,12 @@
-from django.views.generic import FormView
-from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import update_session_auth_hash, logout
+from django.urls import reverse_lazy
+from django.views.generic import FormView
 
-from myProfile.forms import MyCustomPasswordChangeForm
+from myProfile.forms.MyCustomPasswordChangeForm import MyCustomPasswordChangeForm
 
 
-class CustomPasswordChange(LoginRequiredMixin, FormView):
+class ChangePassword(FormView):
     template_name = 'myProfile/change_password.html'
     form_class = MyCustomPasswordChangeForm
     success_url = reverse_lazy('myProfile:password_change_done')
@@ -17,6 +16,7 @@ class CustomPasswordChange(LoginRequiredMixin, FormView):
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
+
 
     def form_valid(self, form):
         user = self.request.user
@@ -29,11 +29,9 @@ class CustomPasswordChange(LoginRequiredMixin, FormView):
         user.save()
 
         # 3. CRITICAL: Keeps the user's session valid using your custom LoginBackend setup
-        update_session_auth_hash(self.request, user)
+        # update_session_auth_hash(self.request, user)
+        logout(self.request)
 
         messages.success(self.request, "Your password has been securely updated!")
         return super().form_valid(form)
 
-    def form_invalid(self, form):
-        messages.error(self.request, "There was a problem updating your password.")
-        return super().form_invalid(form)
