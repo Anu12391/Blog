@@ -49,35 +49,3 @@ class ResetPasswordView(View):
         return render(request, self.invalid_template)
 
 
-# @never_cache
-# def resetPassword(request, uidb64, token):
-#
-#     try:
-#
-#         uid = force_str(urlsafe_base64_decode(uidb64))
-#         user = getUserByUId(uid)
-#
-#     except:
-#
-#         user = None
-#
-#     if user and account_activation_token.check_token(user, token):
-#
-#         if request.method == "POST":
-#             resetPasswordForm = ResetPasswordForm(user, request.POST)
-#
-#             if resetPasswordForm.is_valid():
-#                 resetPasswordForm.save()
-#                 return redirect("login_user")
-#             else:
-#                 logger.warning(f"Password reset validation failed for user ID {user.pk}.")
-#
-#         else:
-#             resetPasswordForm = ResetPasswordForm(user)
-#
-#         return render(request, "login/reset_password_email.html",{"resetPasswordForm":resetPasswordForm})
-#
-#     else:
-#         return render(request, "login/invalid_link.html")
-#
-#
