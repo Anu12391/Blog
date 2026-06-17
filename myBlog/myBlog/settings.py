@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'dashboard',
     'login',
     'myProfile',
+    'mySettings',
 ]
 
 MIDDLEWARE = [
