@@ -8,3 +8,6 @@ class AppNames:
 
     class MyProfile:
         app_name = "myProfile"
+
+    class MySettings:
+        app_name = "mySettings"

@@ -43,6 +43,11 @@ class AuthUrls:
         myProfile_reverseName = 'myprofile'
         myProfile_redirectName = f"{APP.MyProfile.app_name}:{myProfile_reverseName}"
 
+    class MyTopics:
+        myTopics_subUrl = "my-topics/"
+        myTopics_reverseName = 'myTopics'
+        myTopics_redirectName = f"{APP.MySettings.app_name}:{myTopics_reverseName}"
+
 
 
 
