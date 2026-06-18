@@ -1,0 +1,11 @@
+ /* Makes the box look clickable and smooths out the color switch */
+    .topic-card {
+        cursor: pointer;
+        transition: background-color 0.15s ease, color 0.15s ease;
+        user-select: none; /* Stops text from accidentally highlighting blue on fast double-clicks */
+    }
+
+    /* Hover effect ONLY when it hasn't been selected yet */
+    .topic-card:not(.bg-danger):hover {
+        background-color: #f8d7da !important; /* Soft light-red tint */
+    }
