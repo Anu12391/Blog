@@ -7,7 +7,7 @@ from mySettings.models.TopicsOfInterest import Topics
 class TopicAdmin(admin.ModelAdmin):
     list_display = ('topicId','topicName', 'topicDescription', )
 
-    ordering = ('topicId',)
+    ordering = ('topicName',)
 
 admin  .site.register(Topics,TopicAdmin)
 
