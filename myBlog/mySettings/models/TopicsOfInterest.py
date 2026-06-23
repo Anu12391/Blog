@@ -1,5 +1,7 @@
 from django.db import models
 
+from login.models import NewUser
+
 
 class Topics(models.Model):
     topicId = models.AutoField(primary_key=True)
@@ -8,3 +10,13 @@ class Topics(models.Model):
 
 
 
+
+
+class TopicsSelected(models.Model):
+    topic = models.ForeignKey(Topics, on_delete=models.CASCADE,db_column="topicId")
+    user = models.ForeignKey(NewUser, on_delete=models.CASCADE,db_column="user")
+    selected_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        # Prevents a user from selecting the exact same topic twice
+        unique_together = ('user', 'topic')
