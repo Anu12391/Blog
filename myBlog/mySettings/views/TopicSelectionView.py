@@ -19,6 +19,7 @@ class TopicSelection(View):
             topics_pool=getAllToipcs()
 
         currentUser=request.user
+        print(topics_pool)
 
         user_selected_topics=TopicsSelected.objects.filter(user=currentUser).values_list('topic__topicId', flat=True)
 
