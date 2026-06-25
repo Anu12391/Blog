@@ -4,6 +4,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/topic_selection.css' %}">
+ <script src="{% static 'js/topic_selector.js' %}"></script>
 {% endblock head %}
 
 {% block title %} My Topics {% endblock title %}
@@ -67,19 +68,8 @@
     </button>
 
 </div>
-
 <script>
-    const searchQuery = document.getElementById('search-input').value
-    document.getElementById('button-search').addEventListener('click',async () => {
-
-const response = await fetch(`{% url 'mySettings:myTopics' %}?query=${encodeURIComponent(searchQuery)}`);
-    const data = await response.json();
-
-   console.log(data);
-    }
-    )
-
-
+  const myTopicsUrl = "{% url 'mySettings:myTopics' %}";
 </script>
 
 {% endblock body %}
