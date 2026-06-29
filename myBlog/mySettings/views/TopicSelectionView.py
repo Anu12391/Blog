@@ -8,7 +8,7 @@ from mySettings.services.settings_utils import getAllToipcs
 
 
 class TopicSelection(View):
-    """Renders the core UI layout frame."""
+
 
     def get(self, request, *args, **kwargs):
         currentUser = request.user
@@ -21,12 +21,12 @@ class TopicSelection(View):
         return render(request, 'mySettings/topics_selected.html', context)
 
     def post(self, request):
-        # Your form submission update logic lives cleanly here
+
         pass
 
 
 class TopicSearchAPI(View):
-    """Dedicated API endpoint for filtering topics. Returns pure JSON."""
+
 
     def get(self, request, *args, **kwargs):
         search_query = request.GET.get('query', '').strip()
@@ -40,5 +40,7 @@ class TopicSearchAPI(View):
             topics_pool = getAllToipcs()
 
         # Serialize our model data cleanly into a plain dictionary list
-        payload = list(topics_pool.values('topicId', 'topicName'))
-        return JsonResponse({'topics': payload}, safe=False)
+        # payload = list(topics_pool.values('topicId', 'topicName'))
+        # return JsonResponse({'topics': payload}, safe=False)
+        print("search api")
+        return render(request, 'mySettings/topics_searched.html', {'allTopics': topics_pool})

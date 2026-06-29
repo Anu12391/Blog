@@ -34,6 +34,7 @@ async function fetchSearchedTopic(event) {
 
         const htmlData = await response.text();
         document.getElementById("topics-container").innerHTML = htmlData;
+
     } catch (error) {
         console.error("AJAX Fetch failed:", error);
     }
