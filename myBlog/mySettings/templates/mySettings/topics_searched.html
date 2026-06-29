@@ -1,4 +1,7 @@
-<div class="topic-card
+
+    {% for topic in allTopics %}
+
+      <div class="topic-card
                 d-inline-flex
                 align-items-center
                 justify-content-center
@@ -6,7 +9,19 @@
                 rounded p-4"
                 onclick="toggleTopic(this)">
         <p class="text-center mb-0">
-           {{name}}
+           {{topic.topicName}}
         </p>
 
     </div>
+
+
+
+    {% empty %}
+    <p>No topics found.</p>
+
+
+      {% endfor %}
+
+
+
+

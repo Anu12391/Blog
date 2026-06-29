@@ -11,23 +11,38 @@ function toggleTopic(element) {
 
 
 
-function fetchSearchedTopic(){
-console.log("JS LOADED");
-    document.getElementById('button-search').addEventListener('click',async () => {
+async function fetchSearchedTopic(event) {
+    // Prevent standard form tracking from firing if it behaves like a submit button
+    if (event) event.preventDefault();
 
-     console.log("BUTTON:", document.getElementById('button-search'));
+    const searchInput = document.getElementById('search-input');
+    if (!searchInput) return;
 
-    const searchQuery = document.getElementById('search-input').value
-    console.log(searchQuery)
+    const searchQuery = searchInput.value;
+    console.log("Searching for:", searchQuery);
 
-    console.log(searchQuery.value);
-    const response = await fetch(`${myTopicsUrl}?query=${encodeURIComponent(searchQuery)}`);
-    const data = await response.json();
+    try {
+        const response = await fetch(`${myTopicsUrl}?query=${encodeURIComponent(searchQuery)}`, {
+            method: "GET",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "x-requested-with": "XMLHttpRequest" // Send both just in case
+            }
+        });
 
-    console.log(data);
-//update Ui here
+        if (!response.ok) throw new Error("Network response was not OK");
+
+        const htmlData = await response.text();
+        document.getElementById("topics-container").innerHTML = htmlData;
+    } catch (error) {
+        console.error("AJAX Fetch failed:", error);
     }
-    )
+}
 
+document.addEventListener("DOMContentLoaded", () => {
+    const searchBtn = document.getElementById("button-search");
+    if (searchBtn) {
+        // Pass the event argument automatically
+        searchBtn.addEventListener("click", fetchSearchedTopic);
     }
-  document.addEventListener('DOMContentLoaded', fetchSearchedTopic);
+});

@@ -41,16 +41,17 @@
              column-gap-2
              row-gap-3
              justify-content-start
-             mt-3">
-
-    {% for topic in allTopics %}
-
-        {% include 'mySettings/topics_searched.html' with id=topic.topicId name=topic.topicName %}
+             mt-3"
+    id="topics-container">
 
 
 
+        {% include 'mySettings/topics_searched.html'  %}
 
-    {% endfor %}
+
+
+
+
 
 </div>
 
