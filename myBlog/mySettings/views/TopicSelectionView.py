@@ -13,7 +13,7 @@ class TopicSelection(View):
     def get(self, request, *args, **kwargs):
         currentUser = request.user
         user_selected_topics = TopicsSelected.objects.filter(user=currentUser).values_list('topic__topicId', flat=True)
-
+        print(user_selected_topics)
         context = {
             'allTopics': getAllToipcs(),
             'user_selected_ids': list(user_selected_topics),
