@@ -9,3 +9,8 @@
     .topic-card:not(.bg-danger):hover {
         background-color: #f8d7da !important; /* Soft light-red tint */
     }
+
+    .topic-card.selected {
+    background-color: #dc3545;
+    color: white;
+}

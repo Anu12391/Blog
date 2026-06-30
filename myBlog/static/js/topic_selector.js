@@ -26,7 +26,7 @@ async function fetchSearchedTopic(event) {
             method: "GET",
             headers: {
                 "X-Requested-With": "XMLHttpRequest",
-                "x-requested-with": "XMLHttpRequest" // Send both just in case
+                "x-requested-with": "XMLHttpRequest"
             }
         });
 

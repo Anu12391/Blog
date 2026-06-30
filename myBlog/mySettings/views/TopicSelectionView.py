@@ -1,7 +1,7 @@
 from django.db.models import Q
-from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
+
 from mySettings.models import Topics
 from mySettings.models.TopicsOfInterest import TopicsSelected
 from mySettings.services.settings_utils import getAllToipcs
@@ -39,8 +39,6 @@ class TopicSearchAPI(View):
         else:
             topics_pool = getAllToipcs()
 
-        # Serialize our model data cleanly into a plain dictionary list
-        # payload = list(topics_pool.values('topicId', 'topicName'))
-        # return JsonResponse({'topics': payload}, safe=False)
+
         print("search api")
         return render(request, 'mySettings/topics_searched.html', {'allTopics': topics_pool})

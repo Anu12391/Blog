@@ -1,10 +1,16 @@
 
     {% for topic in allTopics %}
 
+
       <div class="topic-card
                 d-inline-flex
                 align-items-center
                 justify-content-center
+                 {% if topic.id in user_selected_ids %}
+  selected
+
+
+    {% endif %}
                 border border-danger
                 rounded p-4"
                 onclick="toggleTopic(this)">
