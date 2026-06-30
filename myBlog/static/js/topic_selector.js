@@ -1,7 +1,21 @@
+
+let activeSelectedIds = [];
 function toggleTopic(element) {
 
      element.classList.toggle('selected');
      const topicId = element.getAttribute('data-topic-id');
+     // Check if the element IS selected after the toggle
+    if (element.classList.contains('selected')) {
+        // If it was just selected, add the ID to our list if it's not already there
+        if (!activeSelectedIds.includes(topicId)) {
+            activeSelectedIds.push(topicId);
+        }
+    } else {
+        // If it was unselected, remove the ID from our list
+        activeSelectedIds = activeSelectedIds.filter(id => id !== topicId);
+    }
+
+    console.log("Current selected IDs:", activeSelectedIds);
 
 }
 
@@ -36,10 +50,20 @@ async function fetchSearchedTopic(event) {
     }
 }
 
+
+fun updateTopicSelection()
+{
+
+
+
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const searchBtn = document.getElementById("button-search");
     if (searchBtn) {
         // Pass the event argument automatically
         searchBtn.addEventListener("click", fetchSearchedTopic);
     }
+    document.getElementById("updateTopic-btn").addEventListener("click", updateTopicSelection);
 });
