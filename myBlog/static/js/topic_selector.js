@@ -1,13 +1,8 @@
 function toggleTopic(element) {
-    // 1. Toggle our custom 'active-selected' tracking marker
-//    element.classList.toggle('active-selected');
 
-    // 2. Toggle Bootstrap classes to swap the colors instantly
-    element.classList.toggle('selected');
-    element.classList.toggle('text-white');
-    element.classList.toggle('text-danger');
-    const topicId = element.getAttribute('data-topic-id');
-     // Removes the initial red text color
+     element.classList.toggle('selected');
+     const topicId = element.getAttribute('data-topic-id');
+
 }
 
 
