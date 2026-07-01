@@ -1,22 +1,16 @@
-/* Makes the box look clickable and smooths out the color switch */
 .topic-card {
     cursor: pointer;
     transition: background-color 0.15s ease, color 0.15s ease;
-    user-select: none; /* Stops text from accidentally highlighting  on fast double-clicks */
-    color: #dc3545;
-
-/* Selected state: Red background, white text */
-.topic-card.selected {
-    background-color: #dc3545 !important;
-    color: #ffffff !important; /* Fixed: 'color' instead of 'text-color' */
+    user-select: none; /* Stops text from accidentally highlighting blue */
 }
 
 /* Hover effect ONLY when it hasn't been selected yet */
 .topic-card:not(.selected):hover {
     background-color: #f8d7da !important; /* Soft light-red tint */
-
-    color: #dc3545 !important;
 }
 
-
-
+/* Fix: Changed text-color to color, and forced it to override text-danger */
+.selected {
+    color: #ffffff !important;
+    background-color: #dc3545 !important;
+}
