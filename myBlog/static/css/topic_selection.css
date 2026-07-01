@@ -6,7 +6,8 @@
 
 /* Hover effect ONLY when it hasn't been selected yet */
 .topic-card:not(.selected):hover {
-    background-color: #f8d7da !important; /* Soft light-red tint */
+    background-color: #f8d7da !important;
+    color: #dc3545 !important;/* Soft light-red tint */
 }
 
 /* Fix: Changed text-color to color, and forced it to override text-danger */
