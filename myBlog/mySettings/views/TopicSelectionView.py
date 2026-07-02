@@ -42,3 +42,8 @@ class TopicSearchAPI(View):
 
         print("search api")
         return render(request, 'mySettings/topics_searched.html', {'allTopics': topics_pool})
+
+
+    class TopicSelectionUpdate(View):
+        def post(self, request, *args, **kwargs):
+            pass

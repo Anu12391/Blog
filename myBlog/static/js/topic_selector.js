@@ -6,18 +6,19 @@ function toggleTopic(element) {
     element.classList.toggle('selected');
 //    element.classList.toggle('text-white');
 //    element.classList.toggle('text-danger');
-    const topicId = element.getAttribute('data-topic-id');
+    const topicId = Number(element.getAttribute('data-topic-id'));
      // Removes the initial red text color
 
 
       if (element.classList.contains('selected')) {
         // If it was just selected, add the ID to our list if it's not already there
         if (!activeSelectedIds.includes(topicId)) {
-        topicIdNum=Number(topicId)
-            activeSelectedIds.push(topicIdNum);
+
+            activeSelectedIds.push(topicId);
         }
     } else {
         // If it was unselected, remove the ID from our list
+
         activeSelectedIds = activeSelectedIds.filter(id => id !== topicId);
     }
 
@@ -71,3 +72,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+
+
+async function postSelectedIds(selectedIdsArr) {
+    try {
+        const response = await fetch("", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: JSON.stringify({
+                'selected_ids': activeSelectedIds
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("Success:", result);
+
+    } catch (error) {
+        console.error("Error during POST request:", error);
+    }
+}
