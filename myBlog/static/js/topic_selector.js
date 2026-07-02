@@ -8,6 +8,20 @@ function toggleTopic(element) {
 //    element.classList.toggle('text-danger');
     const topicId = element.getAttribute('data-topic-id');
      // Removes the initial red text color
+
+
+      if (element.classList.contains('selected')) {
+        // If it was just selected, add the ID to our list if it's not already there
+        if (!activeSelectedIds.includes(topicId)) {
+        topicIdNum=Number(topicId)
+            activeSelectedIds.push(topicIdNum);
+        }
+    } else {
+        // If it was unselected, remove the ID from our list
+        activeSelectedIds = activeSelectedIds.filter(id => id !== topicId);
+    }
+
+    console.log("Current selected IDs:", activeSelectedIds);
 }
 
 
@@ -50,5 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
         // Pass the event argument automatically
         searchBtn.addEventListener("click", fetchSearchedTopic);
         }
+        const dataElement = document.getElementById('selected_ids');
+        if (dataElement) {
+        activeSelectedIds = JSON.parse(dataElement.textContent);
+         console.log("selected ids", activeSelectedIds);
+    }
 
 });

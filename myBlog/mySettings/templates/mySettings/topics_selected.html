@@ -73,6 +73,7 @@
 </div>
 <script>
   const myTopicsUrl = "{% url 'mySettings:api_topic_search' %}";
-</script>
 
+</script>
+ {{ user_selected_ids|json_script:"selected_ids" }}
 {% endblock body %}
