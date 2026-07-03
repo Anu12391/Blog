@@ -1,7 +1,11 @@
+import json
+
 from django.db.models import Q
-from django.shortcuts import render
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 
+from myProfile.models import Profile
 from mySettings.models import Topics
 from mySettings.models.TopicsOfInterest import TopicsSelected
 from mySettings.services.settings_utils import getAllToipcs
@@ -44,6 +48,38 @@ class TopicSearchAPI(View):
         return render(request, 'mySettings/topics_searched.html', {'allTopics': topics_pool})
 
 
-    class TopicSelectionUpdate(View):
-        def post(self, request, *args, **kwargs):
-            pass
+class TopicSelectionUpdate(View):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        selectedTopicIds = data.get("selectedTopicIds", [])
+        # topicSelected = get_object_or_404(TopicsSelected, user=request.user)
+        # print("topics to be updated",topicSelected)
+        # # topics = Topics.objects.filter(topicId__in=selectedTopicIds)
+        # # profile.topics.set(topics)
+
+        current_ids = set(
+            TopicsSelected.objects.filter(user=request.user)
+            .values_list("topic_id", flat=True)
+        )
+
+        new_ids = set(selectedTopicIds)
+
+        # Remove unchecked topics
+        TopicsSelected.objects.filter(
+            user=request.user,
+            topic_id__in=current_ids - new_ids
+        ).delete()
+
+        # Add newly checked topics
+        TopicsSelected.objects.bulk_create(
+            [
+                TopicsSelected(user=request.user, topic_id=topic_id)
+                for topic_id in new_ids - current_ids
+            ],
+            ignore_conflicts=True,
+        )
+
+        return JsonResponse({
+            "success": True,
+            "updated_topics": list(topicSelected.values("id", "name"))
+         })

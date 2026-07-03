@@ -73,18 +73,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+function getCookie(name) {
+    const cookies = document.cookie.split(";");
+
+    for (let cookie of cookies) {
+        cookie = cookie.trim();
+
+        if (cookie.startsWith(name + "=")) {
+            return decodeURIComponent(cookie.substring(name.length + 1));
+        }
+    }
+
+    return null;
+}
+
+async function postSelectedIds() {
 
 
-async function postSelectedIds(selectedIdsArr) {
     try {
-        const response = await fetch("", {
+        const response = await fetch("/topics/update/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRFToken": getCookie("csrftoken"),
             },
             body: JSON.stringify({
-                'selected_ids': activeSelectedIds
+                'selectedTopicIds': activeSelectedIds
             })
         });
 
