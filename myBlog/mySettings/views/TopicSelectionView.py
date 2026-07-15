@@ -48,44 +48,6 @@ class TopicSearchAPI(View):
         return render(request, 'mySettings/topics_searched.html', {'allTopics': topics_pool})
 
 
-# class TopicSelectionUpdate(View):
-#     def post(self, request, *args, **kwargs):
-#         data = json.loads(request.body)
-#         selectedTopicIds = data.get("selectedTopicIds", [])
-#         # topicSelected = get_object_or_404(TopicsSelected, user=request.user)
-#         # print("topics to be updated",topicSelected)
-#         # # topics = Topics.objects.filter(topicId__in=selectedTopicIds)
-#         # # profile.topics.set(topics)
-#
-#         current_ids = set(
-#             TopicsSelected.objects.filter(user=request.user)
-#             .values_list("topicId", flat=True)
-#         )
-#
-#         new_ids = set(selectedTopicIds)
-#
-#         # Remove unchecked topics
-#         TopicsSelected.objects.filter(
-#             user=request.user,
-#             topicId__in=current_ids - new_ids
-#         ).delete()
-#
-#         # Add newly checked topics
-#         TopicsSelected.objects.bulk_create(
-#             [
-#                 TopicsSelected(user=request.user, topicId=topic_id)
-#                 for topic_id in new_ids - current_ids
-#             ],
-#             ignore_conflicts=True,
-#         )
-#         topics = Topics.objects.filter(topicId__in=selectedTopicIds)
-#         return JsonResponse({
-#             "success": True,
-#             "updated_topics": list(
-#                 topics.values("topicId", "topicName")
-#             ),
-#          })
-#
 
 
 
