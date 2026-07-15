@@ -91,7 +91,7 @@ async function postSelectedIds() {
 
 
     try {
-        const response = await fetch("/topics/update/", {
+        const response = await fetch("/my-settings/topics/update/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
