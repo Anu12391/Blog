@@ -91,6 +91,7 @@ async function postSelectedIds() {
 
 
     try {
+    loader.show();
         const response = await fetch("/my-settings/topics/update/", {
             method: "POST",
             headers: {
@@ -111,5 +112,8 @@ async function postSelectedIds() {
 
     } catch (error) {
         console.error("Error during POST request:", error);
+    }
+    finally {
+        loader.hide();
     }
 }
