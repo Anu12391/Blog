@@ -13,3 +13,10 @@ const loader = {
         this.element.classList.remove("show");
     }
 };
+
+
+
+window.closePage = function () {
+    console.log("close clicked");
+    window.history.back();
+};
