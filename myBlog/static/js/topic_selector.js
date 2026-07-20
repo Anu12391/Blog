@@ -26,10 +26,11 @@ function toggleTopic(element) {
 }
 
 
+const suggestions = document.getElementById("suggestions");
 
 async function fetchSearchedTopic(event) {
     // Prevent standard form tracking from firing if it behaves like a submit button
-    if (event) event.preventDefault();
+    //req if (event) event.preventDefault();
 
     const searchInput = document.getElementById('search-input');
     if (!searchInput) return;
@@ -63,6 +64,12 @@ async function fetchSearchedTopic(event) {
 
 
 
+let searchTimer;
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const searchBtn = document.getElementById("button-search");
     if (searchBtn) {
@@ -74,8 +81,39 @@ document.addEventListener("DOMContentLoaded", () => {
         activeSelectedIds = JSON.parse(dataElement.textContent);
          console.log("selected ids", activeSelectedIds);
     }
+ const searchInput = document.getElementById("search-input");
+ const searchDisplayDiv=document.getElementById("topics-container")
+ searchInput.addEventListener("input", function (event) {
+
+    clearTimeout(searchTimer);
+
+    const query = this.value.trim();
+
+    // Don't search until 3 characters
+    if (query.length < 3) {
+        //document.getElementById("topics-container").innerHTML = "";
+        searchDisplayDiv.innerHTML="";
+        return;
+    }
+
+    // Wait 300ms after user stops typing
+    searchTimer = setTimeout(() => {
+        loader.show();
+        fetchSearchedTopic(event);
+    }, 300);
 
 });
+});
+
+
+
+
+
+
+
+
+
+
 
 function getCookie(name) {
     const cookies = document.cookie.split(";");
@@ -90,6 +128,13 @@ function getCookie(name) {
 
     return null;
 }
+
+
+
+
+
+
+
 
 async function postSelectedIds() {
 
@@ -121,3 +166,4 @@ async function postSelectedIds() {
         loader.hide();
     }
 }
+
