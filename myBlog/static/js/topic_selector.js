@@ -156,6 +156,16 @@ function init() {
             clearTimeout(searchTimer);
             const query = this.value.trim();
 
+            if (query.length === 0) {
+                fetchSearchedTopic(event);
+                return;
+            }
+
+            // Don't trigger a new search for 1 or 2 characters to avoid messy partial results
+            if (query.length < 3) {
+                return;
+            }
+
 //            if (query.length < 3) {
 //                if (elements.container) elements.container.innerHTML = "";
 //                return;
