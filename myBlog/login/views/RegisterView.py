@@ -4,6 +4,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.cache import never_cache
 
+from common.Constants.VariableNames import AuthUrls
 from login.forms.register import RegisterForm
 from login.services.signals.EmailLinks.UserActivationEmail import sendActivationEmail
 from myBlog import settings
@@ -27,7 +28,7 @@ class RegisterUser(View):
 
                 lambda: sendActivationEmail.delay(user.id)
             )
-            return redirect("home")
+            return redirect(AuthUrls.Dashboard.dashboard_redirectName)
         return render(request, 'login/new_user.html', {'reg_form': reg_form})
 
 

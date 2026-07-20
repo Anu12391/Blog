@@ -7,7 +7,7 @@
         <div class="col-8 mx-auto mt-3">
             <p class="text-center">Login Form</p>
 
-            <form method="POST">
+            <form method="POST" id="login-form">
                 {% csrf_token %}
 
                 {% include "components/email_field.html" with field=login_form.email %}
@@ -42,6 +42,16 @@
                 .addEventListener("click", function() {
                        window.location.href = "{% url 'dashboard:home' %}";
                 });
+
+
+           document.getElementById("login-form")
+                    .addEventListener("submit", function() {
+                      loader.show();
+                });
+
+              window.addEventListener("load", function () {
+                  loader.hide();
+    });
 </script>
 
 
