@@ -1,146 +1,90 @@
-
+// =========================================================================
+// 1. STATE & GLOBAL CONFIG
+// =========================================================================
 let activeSelectedIds = [];
+let searchTimer;
+
+// DOM Cache (evaluated after DOM loads)
+let elements = {};
+
+// =========================================================================
+// 2. CORE ACTIONS / EVENT HANDLERS
+// =========================================================================
+
+/**
+ * Toggles selection state of a topic element and manages the ID array
+ */
 function toggleTopic(element) {
-
-    // 2. Toggle Bootstrap classes to swap the colors instantly
     element.classList.toggle('selected');
-//    element.classList.toggle('text-white');
-//    element.classList.toggle('text-danger');
     const topicId = Number(element.getAttribute('data-topic-id'));
-     // Removes the initial red text color
 
-
-      if (element.classList.contains('selected')) {
-        // If it was just selected, add the ID to our list if it's not already there
+    if (element.classList.contains('selected')) {
         if (!activeSelectedIds.includes(topicId)) {
-
             activeSelectedIds.push(topicId);
         }
     } else {
-        // If it was unselected, remove the ID from our list
-
         activeSelectedIds = activeSelectedIds.filter(id => id !== topicId);
     }
 
     console.log("Current selected IDs:", activeSelectedIds);
 }
 
+/**
+ * Ensures that newly fetched AJAX elements reflect currently selected IDs
+ */
+function applySelectionUIState() {
+    if (!elements.container) return;
 
-const suggestions = document.getElementById("suggestions");
+    const topicElements = elements.container.querySelectorAll('[data-topic-id]');
+    topicElements.forEach(element => {
+        const topicId = Number(element.getAttribute('data-topic-id'));
+        if (activeSelectedIds.includes(topicId)) {
+            element.classList.add('selected');
+        }
+    });
+}
 
+/**
+ * Fetches topics matching the search query via AJAX
+ */
 async function fetchSearchedTopic(event) {
-    // Prevent standard form tracking from firing if it behaves like a submit button
-    //req if (event) event.preventDefault();
+    if (!elements.input || !elements.container) return;
 
-    const searchInput = document.getElementById('search-input');
-    if (!searchInput) return;
-
-    const searchQuery = searchInput.value;
+    const searchQuery = elements.input.value;
     console.log("Searching for:", searchQuery);
+
+    if (typeof loader !== 'undefined') loader.show();
 
     try {
         const response = await fetch(`${myTopicsUrl}?query=${encodeURIComponent(searchQuery)}`, {
             method: "GET",
             headers: {
-                "X-Requested-With": "XMLHttpRequest",
-                "x-requested-with": "XMLHttpRequest"
+                "X-Requested-With": "XMLHttpRequest"
             }
         });
 
-        if (!response.ok) throw new Error("Network response was not OK");
+        if (!response.ok) throw new Error(`Network response was not OK: ${response.status}`);
 
         const htmlData = await response.text();
-        document.getElementById("topics-container").innerHTML = htmlData;
+        elements.container.innerHTML = htmlData;
 
+        // Re-sync selection classes onto the freshly downloaded HTML
+        applySelectionUIState();
 
     } catch (error) {
         console.error("AJAX Fetch failed:", error);
-    }
-    finally{
-     loader.hide()
+    } finally {
+        if (typeof loader !== 'undefined') loader.hide();
     }
 }
 
-
-
-
-let searchTimer;
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    const searchBtn = document.getElementById("button-search");
-    if (searchBtn) {
-        // Pass the event argument automatically
-        searchBtn.addEventListener("click", fetchSearchedTopic);
-        }
-        const dataElement = document.getElementById('selected_ids');
-        if (dataElement) {
-        activeSelectedIds = JSON.parse(dataElement.textContent);
-         console.log("selected ids", activeSelectedIds);
-    }
- const searchInput = document.getElementById("search-input");
- const searchDisplayDiv=document.getElementById("topics-container")
- searchInput.addEventListener("input", function (event) {
-
-    clearTimeout(searchTimer);
-
-    const query = this.value.trim();
-
-    // Don't search until 3 characters
-    if (query.length < 3) {
-        //document.getElementById("topics-container").innerHTML = "";
-        searchDisplayDiv.innerHTML="";
-        return;
-    }
-
-    // Wait 300ms after user stops typing
-    searchTimer = setTimeout(() => {
-        loader.show();
-        fetchSearchedTopic(event);
-    }, 300);
-
-});
-});
-
-
-
-
-
-
-
-
-
-
-
-function getCookie(name) {
-    const cookies = document.cookie.split(";");
-
-    for (let cookie of cookies) {
-        cookie = cookie.trim();
-
-        if (cookie.startsWith(name + "=")) {
-            return decodeURIComponent(cookie.substring(name.length + 1));
-        }
-    }
-
-    return null;
-}
-
-
-
-
-
-
-
-
+/**
+ * Posts the active selected IDs array back to the server
+ */
 async function postSelectedIds() {
-
+    if (typeof loader !== 'undefined') loader.show();
 
     try {
-    loader.show();
         const response = await fetch("/my-settings/topics/update/", {
             method: "POST",
             headers: {
@@ -152,18 +96,77 @@ async function postSelectedIds() {
             })
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
         const result = await response.json();
-        console.log("Success:", result);
+        console.log("Post Success:", result);
 
     } catch (error) {
         console.error("Error during POST request:", error);
-    }
-    finally {
-        loader.hide();
+    } finally {
+        if (typeof loader !== 'undefined') loader.hide();
     }
 }
 
+// =========================================================================
+// 3. UTILITY FUNCTIONS
+// =========================================================================
+
+function getCookie(name) {
+    const cookies = document.cookie.split(";");
+    for (let cookie of cookies) {
+        cookie = cookie.trim();
+        if (cookie.startsWith(name + "=")) {
+            return decodeURIComponent(cookie.substring(name.length + 1));
+        }
+    }
+    return null;
+}
+
+// =========================================================================
+// 4. INITIALIZATION & LISTENERS
+// =========================================================================
+
+function init() {
+    // Cache DOM Elements safely
+    elements.searchBtn = document.getElementById("button-search");
+    elements.input = document.getElementById("search-input");
+    elements.container = document.getElementById("topics-container");
+    elements.dataInitialState = document.getElementById('selected_ids');
+
+    // Parse Initial State from Server
+    if (elements.dataInitialState && elements.dataInitialState.textContent) {
+        try {
+            activeSelectedIds = JSON.parse(elements.dataInitialState.textContent);
+            console.log("Loaded initial selected IDs:", activeSelectedIds);
+            applySelectionUIState();
+        } catch (e) {
+            console.error("Failed to parse initial IDs:", e);
+        }
+    }
+
+    // Manual Search Button Listener
+    if (elements.searchBtn) {
+        elements.searchBtn.addEventListener("click", fetchSearchedTopic);
+    }
+
+    // Debounced Search Input Listener
+    if (elements.input) {
+        elements.input.addEventListener("input", function (event) {
+            clearTimeout(searchTimer);
+            const query = this.value.trim();
+
+//            if (query.length < 3) {
+//                if (elements.container) elements.container.innerHTML = "";
+//                return;
+//            }
+
+            searchTimer = setTimeout(() => {
+                fetchSearchedTopic(event);
+            }, 300);
+        });
+    }
+}
+
+// Bind bootstrap lifecycle event
+document.addEventListener("DOMContentLoaded", init);
