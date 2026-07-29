@@ -1,6 +1,7 @@
 # myapp/middleware.py
 import logging
 
+from django.db import OperationalError
 from django.shortcuts import render
 from requests.exceptions import ConnectionError, Timeout  # If using the 'requests' library
 
@@ -31,8 +32,8 @@ class GlobalExceptionMiddleware:
             )
 
         # 2. Handle specific database connectivity issues
-        # if isinstance(exception, OperationalError):
-        #     return render(request, 'errors/db_error.html', status=500)
+        if isinstance(exception, OperationalError):
+            return render(request, 'errors/db_error.html', status=500)
 
         # 3. Log everything else, but let Django's default 500 handler pick it up
         logger.error(f"Unhandled exception: {exception}", exc_info=True)
