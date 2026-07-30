@@ -17,12 +17,12 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.shortcuts import render
 from django.urls import path, include
 
-handler404="myBlog.common.error_views.error_400"
-handler500="myBlog.common.error_views.error_500"
-handler403="myBlog.common.error_views.error_403"
+handler404='common.error_views.error_404'
+handler500='common.error_views.error_500'
+handler403='common.error_views.error_403'
+handler400='common.error_views.error_400'
 
 
 

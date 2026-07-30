@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'myBlog.common.GlobalMiddleware.GlobalExceptionMiddleware'
+    'common.GlobalMiddleware.GlobalExceptionMiddleware'
 
 ]
 
