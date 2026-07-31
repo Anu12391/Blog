@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'login',
     'myProfile',
     'mySettings',
+    'myPosts',
 ]
 
 MIDDLEWARE = [
