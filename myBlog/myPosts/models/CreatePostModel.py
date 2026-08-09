@@ -1,11 +1,29 @@
-from dashboard import models
-from mySettings.models import Topics
+import uuid
+
+from django.conf import settings
+from django.db import models
 
 
-class CreatePost(models.Model):
-    topic=models.ForeignKey(Topics,on_delete=models.CASCADE)
-    postId = models.CharField(max_length=30, unique=True, editable=False)
+class Post(models.Model):
+    post_id = models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        editable=False
+    )
+    topic = models.ForeignKey(
+        "Topics",
+        on_delete=models.PROTECT,
+        related_name="posts"
+    )
     title = models.CharField(max_length=200)
     content = models.TextField()
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="posts_created"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-
+    def __str__(self):
+        return self.title
