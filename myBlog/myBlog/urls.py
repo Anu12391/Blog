@@ -34,6 +34,7 @@ urlpatterns = [
     path('user/', include('login.urls')),
     path('my-profile/', include('myProfile.urls')),
     path('my-settings/', include('mySettings.urls')),
+    path('myPosts/', include('myPosts.urls')),
 
 ]
 if settings.DEBUG:

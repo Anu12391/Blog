@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import models
 
 from common.image_validator.ImageValidation import validate_image_dimensions
+from mySettings.models import Topics
 
 
 class Post(models.Model):
@@ -13,7 +14,7 @@ class Post(models.Model):
         editable=False
     )
     topic = models.ForeignKey(
-        "Topics",
+        Topics,
         on_delete=models.PROTECT,
         related_name="posts"
     )
