@@ -8,6 +8,9 @@ class Topics(models.Model):
     topicName = models.CharField(max_length=100)
     topicDescription = models.CharField(max_length=500)
 
+    def __str__(self):
+        return self.topicName
+
 
 
 

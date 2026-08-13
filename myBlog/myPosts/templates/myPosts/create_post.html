@@ -10,7 +10,7 @@
         {% csrf_token %}
 
         {% include "components/text.html" with field=form.title %}
-<!--        {% include "components/dropdown.html" with field=form.topic %}-->
+        {% include "components/dropdown_dynamic.html" with field=form.topic label="Choose topic"%}
         {% include "components/textarea.html" with field=form.content %}
 
         <button class="btn btn-primary" type="submit">Create Post</button>
