@@ -3,6 +3,8 @@ import uuid
 from django.conf import settings
 from django.db import models
 
+from common.image_validator.ImageValidation import validate_image_dimensions
+
 
 class Post(models.Model):
     post_id = models.UUIDField(
@@ -15,8 +17,16 @@ class Post(models.Model):
         on_delete=models.PROTECT,
         related_name="posts"
     )
+    image = models.ImageField(
+        upload_to='posts/',
+        blank=True,
+        null=True,
+        validators=[validate_image_dimensions]
+    )
     title = models.CharField(max_length=200)
+
     content = models.TextField()
+
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -27,3 +37,5 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
