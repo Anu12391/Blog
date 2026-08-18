@@ -18,7 +18,7 @@ class Post(models.Model):
         on_delete=models.PROTECT,
         related_name="posts"
     )
-    image = models.ImageField(
+    imagePost = models.ImageField(
         upload_to='posts/',
         blank=True,
         null=True,
