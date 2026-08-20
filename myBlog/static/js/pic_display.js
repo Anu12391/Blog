@@ -29,3 +29,18 @@ function handleImageDeletion(fieldId, defaultUrl) {
     // 3. Revert preview immediately to the default static avatar
     document.getElementById('avatar-preview').src = defaultUrl;
 }
+
+function previewImage(input,btnName) {
+    const preview = document.getElementById(btnName);
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = "block";
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
