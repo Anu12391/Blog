@@ -30,22 +30,52 @@ function handleImageDeletion(fieldId, defaultUrl) {
     document.getElementById('avatar-preview').src = defaultUrl;
 }
 
-function previewImage(input, previewId) {
+function previewImage(input, previewId, deleteBtnId) {
     const preview = document.getElementById(previewId);
+    const deleteBtn = document.getElementById(deleteBtnId);
 
     if (input.files && input.files[0]) {
         const reader = new FileReader();
 
         reader.onload = function (e) {
+            // Display the image
             preview.src = e.target.result;
             preview.classList.remove("d-none");
             preview.style.display = "block";
+
+            // Show the delete button
+            if (deleteBtn) {
+                deleteBtn.classList.remove("d-none");
+                deleteBtn.style.display = "inline-block";
+            }
         };
 
         reader.readAsDataURL(input.files[0]);
     } else {
+        removeImage(input.id, previewId, deleteBtnId);
+    }
+}
+
+function removeImage(inputId, previewId, deleteBtnId) {
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+    const deleteBtn = document.getElementById(deleteBtnId);
+
+    // Reset file input value
+    if (input) {
+        input.value = "";
+    }
+
+    // Hide and clear image
+    if (preview) {
         preview.src = "";
         preview.classList.add("d-none");
         preview.style.display = "none";
+    }
+
+    // Hide delete button
+    if (deleteBtn) {
+        deleteBtn.classList.add("d-none");
+        deleteBtn.style.display = "none";
     }
 }
