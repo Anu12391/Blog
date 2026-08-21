@@ -2,8 +2,9 @@
 
 {% load static %}
 {% block head %}
- <script src="{% static 'js/pic_display.js' %}"></script>
+<script src="{% static 'js/pic_display.js' %}"></script>
 {% endblock head %}
+
 {% block title %} Create Post {% endblock title %}
 
 {% block body %}
@@ -13,34 +14,31 @@
         {% csrf_token %}
 
         {% include "components/text.html" with field=form.title %}
+
         <div class="mb-3">
- <div class="mb-3">
 
-    <label for="{{ form.imagePost.id_for_label }}" class="btn btn-primary">
-        Upload New Photo
-    </label>
 
-    <input
-        type="file"
-        name="{{ form.imagePost.name }}"
-        id="{{ form.imagePost.id_for_label }}"
-        accept="image/*"
-        class="d-none"
-        onchange="previewImage('{{ form.imagePost.id_for_label }}',imagePreview)"
-    >
 
-    <div class="mt-3">
-        <img
-            id="imagePreview"
-            src=""
-            alt="Image Preview"
-            class="img-fluid rounded"
-            style="display: none; max-width: 400px; max-height: 300px;"
-        >
-    </div>
+            <input
+                type="file"
+                name="{{ form.imagePost.name }}"
+                id="{{ form.imagePost.id_for_label }}"
+                accept="image/*"
+                class="d-none"
+                onchange="previewImage(this, 'imagePreview')"
+            >
 
-</div>
-    </div>
+            <div class="mt-3">
+                <img
+                    id="imagePreview"
+                    src=""
+                    alt="Image Preview"
+                    class="img-fluid rounded d-none"
+                    style="max-width: 400px; max-height: 300px;"
+                >
+            </div>
+             <button class="btn btn-primary mt-3" type="button" id="imageBtn">Upload Image</button>
+        </div>
 
         {% include "components/dropdown_dynamic.html" with field=form.topic label="Choose topic"%}
         {% include "components/textarea.html" with field=form.content %}
@@ -49,4 +47,16 @@
     </form>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const btn = document.getElementById("imageBtn");
+        const fileInput = document.getElementById("{{ form.imagePost.id_for_label }}");
+
+        if (btn && fileInput) {
+            btn.addEventListener("click", function () {
+                fileInput.click();
+            });
+        }
+    });
+</script>
 {% endblock body %}

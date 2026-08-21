@@ -30,17 +30,22 @@ function handleImageDeletion(fieldId, defaultUrl) {
     document.getElementById('avatar-preview').src = defaultUrl;
 }
 
-function previewImage(input,btnName) {
-    const preview = document.getElementById(btnName);
+function previewImage(input, previewId) {
+    const preview = document.getElementById(previewId);
 
     if (input.files && input.files[0]) {
         const reader = new FileReader();
 
         reader.onload = function (e) {
             preview.src = e.target.result;
+            preview.classList.remove("d-none");
             preview.style.display = "block";
         };
 
         reader.readAsDataURL(input.files[0]);
+    } else {
+        preview.src = "";
+        preview.classList.add("d-none");
+        preview.style.display = "none";
     }
 }
