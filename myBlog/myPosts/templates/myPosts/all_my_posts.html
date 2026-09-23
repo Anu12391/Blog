@@ -29,7 +29,7 @@
                         </h5>
 
                         <p class="card-text">
-                            {{ myPost.content }}
+                          {{ myPost.content|truncatechars:200 }}
                         </p>
 
                         <p class="fw-bold text-muted mb-0">
