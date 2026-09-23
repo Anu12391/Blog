@@ -10,14 +10,18 @@
 {% block body %}
 <div class="container mt-5">
 
-    <h2 class="mb-4">Products</h2>
+    <h2 class="mb-4">My Posts</h2>
 
     <div class="row">
 
         {% for myPost in my_posts %}
-            <div class="row-md-4 mb-4">
+            <div class="col-md-4 mb-4">
 
-                <div class="card ">
+                <div class="card h-100">
+                    {% if myPost.imagePost %}
+                        <img src="{{ myPost.imagePost.url }}" class="card-img-top" alt="{{ myPost.title }}">
+                    {% endif %}
+
                     <div class="card-body">
 
                         <h5 class="card-title">
@@ -28,8 +32,8 @@
                             {{ myPost.content }}
                         </p>
 
-                        <p class="fw-bold">
-                            {{ myPost.created_at }}
+                        <p class="fw-bold text-muted mb-0">
+                            {{ myPost.created_at|date:"M d, Y" }}
                         </p>
 
                     </div>
@@ -39,7 +43,7 @@
 
         {% empty %}
             <div class="col-12">
-                <p>No products found.</p>
+                <p>No posts found.</p>
             </div>
         {% endfor %}
 
@@ -47,7 +51,7 @@
 
 
     {% if is_paginated %}
-    <nav aria-label="Product pagination">
+    <nav aria-label="Post pagination">
 
         <ul class="pagination justify-content-center">
 
